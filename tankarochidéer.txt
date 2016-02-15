@@ -1,0 +1,9 @@
+Om vi börjar med att lägga in en karta och kopplar partier mot en färg, och sedan färgar varje kommun med det parti som har högst där, har vi en bra start.
+
+Alternativt kan man blanda färger. Då blir det svårare att se vilket parti som leder, men om ett parti skulle leda stort blir det tydlige och man kan se en blandning av två eller kanske max tre färger (mer visualiserat men svårare att utskilja)
+
+Det är svårt att koppla ålderdata och inkomst till våra dataset eftersom det inte ingår direkt. Det är om vi lyckas hitta ett bra dataset som täcker allt. Hittar vi dataset med ålder mot kommun så vet vi fortfarande inte hur mycket av gamlingar som röstade på moderaterna till exempel, bara att moderaterna leder i en kommun med mycket gamlingar vilket inte behöver säga nånting. (kanske intressant ändå?)
+
+Filtrera på specifika partier. Exempelvis filter på socialdemokraterna blir kommunerna mer eller mindre röda beroende på procent röster. Eller/och att vi skriver ut siffran framför varje kommun bara.
+
+Data mining algoritm: Kanske leta kluster på kommuner som röstat likadant. Då kan man välja t.ex. 3 kluster så delas Sverige in i tre färger.
