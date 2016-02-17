@@ -66,15 +66,52 @@ function createMajorityList(data) {
 }
 
 //Draws the map and the points
-function draw(countries)
+function draw(regions)
 {
     //draw map
-    var country = g.selectAll(".country").data(countries);
-    country.enter().insert("path")
+    var region = g.selectAll(".country").data(regions);
+    region.enter().insert("path")
             .attr("class", "country")
             .attr("d", path)
             .style('stroke-width', 1)
-            .style("fill", "black")
+            .style("fill", function(d) {
+				
+				//console.log(d.properties.name);
+				
+				var tempMaj = "";
+				
+				//Seach through majParty  untill region names match, use the maj-party to set color
+				for (var i = 0; i < majParty.length; i++) {
+					
+					console.log("comparing " + d.properties.name);// + " with " + majParty[i][0])
+					
+					if(d.properties.name == majParty[i][0]) {
+						
+						
+						tempMaj = majParty[i][1];
+						// tempMaj = "" + majParty[i].parti;
+						// tempMaj = tempMaj.toLowerCase();
+						//break;
+						
+						console.log("Found match! tempMaj = " + tempMaj);
+					}
+				}
+				
+				//console.log("After loop, tempMaj = " + tempMaj);
+				
+				switch (tempMaj) {
+					
+					case "socialdemokraterna":
+						return "red";
+					break;
+					
+					case "moderaterna":
+						return "blue";
+					break;
+				}
+				
+				return "black";
+			})
             .style("stroke", "white");
 };
 
