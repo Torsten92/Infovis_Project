@@ -20,7 +20,7 @@ var path = d3.geo.path().projection(projection);
 
 //Load data
 function loadData(value) {
-    console.log(value);
+    //console.log(value);
     var dataset = "Data/Swedish_Election_" + value + ".csv";
     d3.csv(dataset, function(data) {
         createMajorityList(data);
@@ -49,6 +49,9 @@ function createMajorityList(data) {
 		var majority = data[k].parti;
 		var votePerc = parseFloat(data[k].procent);
 		var region = data[k].region;
+		
+		region = replaceSpecialChars(region);
+		//console.log(region);
 	
 		for (var i = k; i < k+11; i++) {
 			
@@ -62,11 +65,21 @@ function createMajorityList(data) {
 		region = region.substring(5, region.length);
 		
 		majParty[listIndex] = {region, majority, votePerc};
-		// console.log(majParty[listIndex]);
 		
 		k += 11;
 		listIndex++;
 	}
+}
+
+function replaceSpecialChars (str) {
+	str = str.replace(/�/g, "8"); 
+	str = str.replace(/å/g, "8");  
+	str = str.replace(/ä/g, "8");  
+	str = str.replace(/ö/g, "8"); 
+	str = str.replace(/Å/g, "8"); 
+	str = str.replace(/Ä/g, "8"); 
+	str = str.replace(/Ö/g, "8"); 
+	return str;
 }
 
 //Draws the map and the points
@@ -82,16 +95,12 @@ function draw(regions)
             .style("fill", function(d) {
 				
 				var tempMaj = "";
-				var nameReplace =  d.properties.name;
-	
+				
 				//Seach through majParty  until region names match, use the maj-party to set color
 				for (var i = 0; i < majParty.length; i++) {
-					
-					var listNameReplace = ""; //formatString( majParty[i].region );
-					console.log("After Replace: " + listNameReplace)
-					
+				
 					//compare region names					
-					if(nameReplace == listNameReplace) {
+					if( replaceSpecialChars( d.properties.name ) == majParty[i].region) {
 						
 						tempMaj = majParty[i].majority;
 						tempMaj = tempMaj.toLowerCase();
