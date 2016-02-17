@@ -31,7 +31,7 @@ d3.json("data/swe_mun.topojson", function(error, sweden) {
     draw(mun);
 });
 
-//stores kommun and it's majrity
+//stores region and it's majority party
 var majParty = [];
 
 //Build a list  with the region name, and which party has majority there, plus the percentage
@@ -73,31 +73,24 @@ function draw(regions)
     region.enter().insert("path")
             .attr("class", "country")
             .attr("d", path)
-            .style('stroke-width', 1)
+            .style('stroke-width', 0.1)
             .style("fill", function(d) {
-				
-				//console.log(d.properties.name);
 				
 				var tempMaj = "";
 				
 				//Seach through majParty  untill region names match, use the maj-party to set color
 				for (var i = 0; i < majParty.length; i++) {
 					
-					console.log("comparing " + d.properties.name);// + " with " + majParty[i][0])
-					
-					if(d.properties.name == majParty[i][0]) {
+					//compare region names					
+					if(d.properties.name == majParty[i].region) {
 						
-						
-						tempMaj = majParty[i][1];
+						tempMaj = majParty[i].majority;
 						// tempMaj = "" + majParty[i].parti;
-						// tempMaj = tempMaj.toLowerCase();
-						//break;
-						
+						tempMaj = tempMaj.toLowerCase();
 						console.log("Found match! tempMaj = " + tempMaj);
+						break;
 					}
 				}
-				
-				//console.log("After loop, tempMaj = " + tempMaj);
 				
 				switch (tempMaj) {
 					
