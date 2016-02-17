@@ -18,11 +18,53 @@ var projection = d3.geo.mercator()
 //Creates a new geographic path generator and assing the projection        
 var path = d3.geo.path().projection(projection);
 
+//Load data
+d3.csv("Data/Swedish_Election_2002.csv", function(data) {
+	
+	createMajorityList(data);
+});
+
+//Load the topojson data with "svenska kommuner"
 d3.json("data/swe_mun.topojson", function(error, sweden) {
     var mun = topojson.feature(sweden, sweden.objects.swe_mun).features;
-    console.log(mun);
+    //console.log(mun);
     draw(mun);
 });
+
+//stores kommun and it's majrity
+var majParty = [];
+
+//Build a list  with the region name, and which party has majority there, plus the percentage
+function createMajorityList(data) {
+	
+	var k = 0;
+	var listIndex = 0;
+	
+	while (k < data.length) {
+	
+		var majority = data[k].parti;
+		var votePerc = parseFloat(data[k].procent);
+		var region = data[k].region;
+	
+		for (var i = k; i < k+11; i++) {
+			
+			if(parseFloat(data[i].procent) > votePerc) {	
+				majority = data[i].parti;
+				votePerc = data[i].procent;
+			}
+		}
+		
+		//remove the numbers in the region name
+		region = region.substring(5, region.length);
+		
+		majParty[listIndex] = {region, majority, votePerc};
+		// console.log(majParty[listIndex]);
+		
+		k += 11;
+		listIndex++;
+	}
+}
+
 //Draws the map and the points
 function draw(countries)
 {
@@ -32,7 +74,7 @@ function draw(countries)
             .attr("class", "country")
             .attr("d", path)
             .style('stroke-width', 1)
-            .style("fill", "lightgray")
+            .style("fill", "black")
             .style("stroke", "white");
 };
 
