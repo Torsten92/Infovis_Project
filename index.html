@@ -21,7 +21,20 @@
     <body>
         <link rel="stylesheet" type="text/css" href="css/style.css">
 
-        <div id="menu">
+        <div id="map"></div>
+
+        <script src="js/vendor/jquery.min.js"></script>
+        <script src="js/vendor/bootstrap.min.js"></script>
+        <script src="js/plugins.js"></script>
+        <script src="js/vendor/d3.v3.min.js"></script>
+        <script src="js/vendor/modernizr-2.6.2.min.js"></script>
+        <script src="js/vendor/topojson.v1.min.js"></script>
+        <script src="js/vendor/underscore-min.js"></script>
+        <script src="js/vendor/colorbrewer.js"></script>
+
+        <script src="js/map.js"></script>
+        
+                <div id="menu">
             <div id="menuitem">
                 <div id="left40">
                     <label>
@@ -35,12 +48,13 @@
                     // Ugly fix required only for Firefox
                     var x = document.getElementById("voteslider").value;
                     document.getElementById("slider-value").innerHTML= x;
-
+                    votingtext(x);
                     function votingtext(newValue)
                     {
                         document.getElementById("slider-value").innerHTML=newValue;
                         
                         // Send newValue to the map for visualization
+                        loadData(newValue);
                     }
                 </script>
                 
@@ -66,18 +80,6 @@
             </div>
         </div>
         
-        <div id="map"></div>
 
-        <script src="js/vendor/jquery.min.js"></script>
-        <script src="js/vendor/bootstrap.min.js"></script>
-        <script src="js/plugins.js"></script>
-        <script src="js/vendor/d3.v3.min.js"></script>
-        <script src="js/vendor/modernizr-2.6.2.min.js"></script>
-        <script src="js/vendor/topojson.v1.min.js"></script>
-        <script src="js/vendor/underscore-min.js"></script>
-        <script src="js/vendor/colorbrewer.js"></script>
-
-        <script src="js/map.js"></script>
-        
     </body>
 </html>

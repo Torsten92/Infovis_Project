@@ -4,32 +4,35 @@ var zoom = d3.behavior.zoom()
 
 //Assings the svg canvas to the map div
 var svg = d3.select("#map").append("svg")
-        .attr("width", 800)
-        .attr("height", 300)
+        .attr("width", 400)
+        .attr("height", 600)
         .call(zoom);
 
 var g = svg.append("g");
 
 //Sets the map projection
 var projection = d3.geo.mercator()
-        .center([8.25, 56.8])
+        .center([40, 62.5])
         .scale(700);
 
 //Creates a new geographic path generator and assing the projection        
 var path = d3.geo.path().projection(projection);
 
 //Load data
-d3.csv("Data/Swedish_Election_2002.csv", function(data) {
-	
-	createMajorityList(data);
-});
+function loadData(value) {
+    console.log(value);
+    var dataset = "Data/Swedish_Election_" + value + ".csv";
+    d3.csv(dataset, function(data) {
+        createMajorityList(data);
+    });
 
-//Load the topojson data with "svenska kommuner"
-d3.json("data/swe_mun.topojson", function(error, sweden) {
-    var mun = topojson.feature(sweden, sweden.objects.swe_mun).features;
-    //console.log(mun);
-    draw(mun);
-});
+    //Load the topojson data with "svenska kommuner"
+    d3.json("data/swe_mun.topojson", function(error, sweden) {
+        var mun = topojson.feature(sweden, sweden.objects.swe_mun).features;
+        //console.log(mun);
+        draw(mun);
+    });
+}
 
 //stores region and it's majority party
 var majParty = [];
@@ -37,6 +40,7 @@ var majParty = [];
 //Build a list  with the region name, and which party has majority there, plus the percentage
 function createMajorityList(data) {
 	
+    majParty = [];
 	var k = 0;
 	var listIndex = 0;
 	
@@ -68,6 +72,7 @@ function createMajorityList(data) {
 //Draws the map and the points
 function draw(regions)
 {
+    g.selectAll("*").remove();
     //draw map
     var region = g.selectAll(".country").data(regions);
     region.enter().insert("path")
