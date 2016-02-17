@@ -77,21 +77,24 @@ function draw(regions)
             .style("fill", function(d) {
 				
 				var tempMaj = "";
-				
-				//Seach through majParty  untill region names match, use the maj-party to set color
+				var nameReplace =  d.properties.name;
+	
+				//Seach through majParty  until region names match, use the maj-party to set color
 				for (var i = 0; i < majParty.length; i++) {
 					
+					var listNameReplace = ""; //formatString( majParty[i].region );
+					console.log("After Replace: " + listNameReplace)
+					
 					//compare region names					
-					if(d.properties.name == majParty[i].region) {
+					if(nameReplace == listNameReplace) {
 						
 						tempMaj = majParty[i].majority;
-						// tempMaj = "" + majParty[i].parti;
 						tempMaj = tempMaj.toLowerCase();
-						console.log("Found match! tempMaj = " + tempMaj);
 						break;
 					}
 				}
 				
+				//return color depending on leading party
 				switch (tempMaj) {
 					
 					case "socialdemokraterna":
@@ -103,10 +106,22 @@ function draw(regions)
 					break;
 				}
 				
+				//return black as default color
 				return "black";
 			})
-            .style("stroke", "white");
+            .style("stroke", "white")
 };
+
+function formatString(str) {
+	res = str
+		.replace("Ã¥", 'å')
+		.replace("Ã…", 'å')
+		.replace("Ã¤", 'ä')
+		.replace("Ã„", 'ä')
+		.replace("Ã¶", 'ö')
+		.replace("Ã–", 'ö');	
+	return res;
+}
 
 //Zoom and panning method
 function move() {
