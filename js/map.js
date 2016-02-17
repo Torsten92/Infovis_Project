@@ -51,6 +51,7 @@ function createMajorityList(data) {
 		var region = data[k].region;
 		
 		region = replaceSpecialChars(region);
+		region = region.toLowerCase();
 		//console.log(region);
 	
 		for (var i = k; i < k+11; i++) {
@@ -96,27 +97,51 @@ function draw(regions)
 				
 				var tempMaj = "";
 				
+				var nameReplaced = replaceSpecialChars( d.properties.name ).toLowerCase();
+				
 				//Seach through majParty  until region names match, use the maj-party to set color
 				for (var i = 0; i < majParty.length; i++) {
 				
 					//compare region names					
-					if( replaceSpecialChars( d.properties.name ) == majParty[i].region) {
+					if( nameReplaced == majParty[i].region) {
 						
-						tempMaj = majParty[i].majority;
-						tempMaj = tempMaj.toLowerCase();
+						console.log("Matched " + nameReplaced +  " and " + majParty[i].region); 
+						
+						tempMaj = (majParty[i].majority).toLowerCase();
 						break;
 					}
+					// else 
+						// console.log("Did not match " + nameReplaced +  " and " + majParty[i].region);
+					
 				}
 				
+
 				//return color depending on leading party
 				switch (tempMaj) {
 					
 					case "socialdemokraterna":
 						return "red";
 					break;
-					
 					case "moderaterna":
 						return "blue";
+					break;
+					case "centerpartiet":
+						return "green";
+					break;
+					case "folkpartiet":
+						return "green";
+					break;
+					case "kristdemokraterna":
+						return "green";
+					break;
+					case "miljöpartiet":
+						return "green";
+					break;
+					case "vänsterpartiet":
+						return "green";
+					break;
+					case "sverigedemokraterna":
+						return "yellow";
 					break;
 				}
 				
