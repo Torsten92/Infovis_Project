@@ -13,6 +13,11 @@ var partyColor = { 	"socialdemokraterna": 	"rgb(255, 0, 0)",
 					"qvriga partier": 		"rgb(0, 255, 0)",
 				};
 
+//Used for displaying text while the "Filter by specific party" is checked
+var filtertextDiv = d3.select("#map").append("div")
+		.attr("class", "filteredPartyText")
+		.style("opacity", 0);
+
 //dataset might be different depending on the slider position. It will be initialized on startup in loadData()
 var dataset;
 

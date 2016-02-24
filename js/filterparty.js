@@ -19,46 +19,59 @@ function filterByParty( checkbox ) {
 	
 	//get selection from drop down menu
 	var e = document.getElementById("dropmenu");
-	partyToFilter = e.options[e.selectedIndex].text;
+	partyToFilter = e.options[e.selectedIndex].text.toString().toLowerCase();
 	
 	//Enable/disable drop menu
-	e.disabled = !e.disabled;
+	e.disabled = !checkbox.checked;
 	
 	//set start index in data set
-	startIndex = startIndexList[ partyToFilter.toString().toLowerCase() ];
+	startIndex = startIndexList[ partyToFilter ];
 	
 	//create list of percentage per region
 	createList(startIndex);
 	
 	//find max rgb in order to normalize colors
-	findMaxRgb();
+	findMaxRGB();
 	
 	//redraw map
 	draw(mun);
+	
+	if(!e.disabled)
+		filtertextDiv.transition()
+			.duration(200)
+			.style("opacity", 1);
+		else
+			filtertextDiv.transition()
+				.duration(200)
+				.style("opacity", 0);
+		
+	filtertextDiv.html(partyToFilter + " had its highest voting percentage in Norrköping with 666%!");
+
 }
 
 //called when drop down menu is changed
 function changeFilterParty() {
-	
+	console.log("changefilterparty");
 	var e = document.getElementById("dropmenu");
-	partyToFilter = e.options[e.selectedIndex].text;
+	partyToFilter = e.options[e.selectedIndex].text.toString().toLowerCase();
 	
 	//set start index in data set
-	startIndex = startIndexList[ partyToFilter.toString().toLowerCase() ];
+	startIndex = startIndexList[ partyToFilter ];
 	
 	//create list of percentage per region
 	createList(startIndex);
 	
 	//find max rgb in order to normalize colors
-	findMaxRgb();
+	findMaxRGB();
 	
 	//redraw map
 	draw(mun);
+	
+	filtertextDiv.html(partyToFilter + " had its highest voting percentage in Norrköping with 666%!");
 }
 
 //fill a list with the filtered parties percentages for each region
 function createList(index) {
-	
 	var listIndex = 0;	
 	while (dataset[index]) {
 		
@@ -70,7 +83,7 @@ function createList(index) {
 }
 
 //Find max RGB values in order to later normalize
-function findMaxRgb() {
+function findMaxRGB() {
 	
 	//reset
 	maxRed = 1;

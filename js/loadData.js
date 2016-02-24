@@ -3,8 +3,7 @@ var mun;
 
 //Load data
 function loadData(value) {
-    //console.log(value);
-    dataset = "Data/Swedish_Election_" + value + ".csv";
+    dataset = "data/Swedish_Election_" + value + ".csv";
 	
     d3.csv(dataset, function(data) {
 		dataset = data;
@@ -12,12 +11,16 @@ function loadData(value) {
         dataset = data;
     });
     
-
-    //Load the topojson data with "svenska kommuner"
-    d3.json("data/swe_mun.topojson", function(error, sweden) {
+	//Load the topojson data with "svenska kommuner"
+	d3.json("data/swe_mun.topojson", function(error, sweden) {
 		mun = topojson.feature(sweden, sweden.objects.swe_mun).features;
-        draw(mun);
-    });
+		
+		var filterParty = document.getElementById("checkbox1");
+		if(filterParty.checked)
+	   		filterByParty(filterParty);
+		else
+			draw(mun);
+	});
 }
 
 //stores region and it's majority party

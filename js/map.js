@@ -11,7 +11,7 @@ var svg = d3.select("#map").append("svg")
 
 var g = svg.append("g");
 
-var div = d3.select("body").append("div")	
+var tooltipDiv = d3.select("body").append("div")	
 		.attr("class", "tooltip")
 		.style("opacity", 1)
 		.style("visability", false);
@@ -48,10 +48,10 @@ function draw(regions)
 
             //Tooltip
 			.on("mouseover", function(d) {
-				div.transition()		
+				tooltipDiv.transition()	
 					.duration(200)
 					.style("opacity", 1);
-				div.html( function() {
+				tooltipDiv.html( function() {
 					var tooltip = "<font size='4'> " + d.properties.name + "</font>";
 					
 					var temp = [];
@@ -61,7 +61,8 @@ function draw(regions)
 				        	temp[x++] = {"region": d2.region, "parti": d2.parti, "procent": d2.procent};
 				        }
 					});
-			        //sortera temp på procent
+					
+			        //Sort array by party precentage
 			        function compare(a, b) {
 			        	return parseFloat(b.procent) - parseFloat(a.procent);
 			        }
@@ -72,11 +73,11 @@ function draw(regions)
 						var name = formatString(d.properties.name);
 						if(region == name) {
 							var rgb = partyColor[formatString(temp[i].parti)];
-
 							var hex = rgbToHex(rgb);
-							if(filterChecked && partyToFilter == temp[i].parti)
+							
+							if(filterChecked && formatString(partyToFilter) == formatString(temp[i].parti))
 								tooltip += "<br><font color=" + hex + "> " + temp[i].parti +  " : " + temp[i].procent + "%</font>";
-							else if(filterChecked && partyToFilter != temp[i].parti)
+							else if(filterChecked && formatString(partyToFilter) != formatString(temp[i].parti))
 								tooltip += "<br>" + temp[i].parti +  " : " + temp[i].procent + "%";
 							else
 								tooltip += "<br><font color=" + hex + "> " + temp[i].parti +  " : " + temp[i].procent + "%</font>";
@@ -89,9 +90,7 @@ function draw(regions)
                 .style("top", (d3.event.pageY - 28) + "px")
             })
 			.on("mouseout", function(d) {
-				div.transition()		
-					.duration(500)
-					.style("opacity", 0);		
+				tooltipDiv.transition().style("opacity", 0);		
 			})
 };
 
