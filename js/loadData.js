@@ -1,9 +1,13 @@
 
+var mun;
+
 //Load data
 function loadData(value) {
-
+    //console.log(value);
     dataset = "Data/Swedish_Election_" + value + ".csv";
+	
     d3.csv(dataset, function(data) {
+		dataset = data;
         createMajorityList(data);
         dataset = data;
     });
@@ -11,8 +15,7 @@ function loadData(value) {
 
     //Load the topojson data with "svenska kommuner"
     d3.json("data/swe_mun.topojson", function(error, sweden) {
-        var mun = topojson.feature(sweden, sweden.objects.swe_mun).features;
-        //console.log(mun);
+		mun = topojson.feature(sweden, sweden.objects.swe_mun).features;
         draw(mun);
     });
 }

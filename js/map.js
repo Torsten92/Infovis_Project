@@ -35,27 +35,14 @@ function draw(regions)
             .attr("class", "country")
             .attr("d", path)
             .style('stroke-width', 0.1)
-            .style("fill", function(d) {
+            .style("fill", function(d, i) {
 				
-				var tempMaj = "";
-				
-				var nameReplaced = replaceSpecialChars( d.properties.name ).toLowerCase();
-				
-				//Seach through majParty  until region names match, use the maj-party to set color
-				for (var i = 0; i < majParty.length; i++) {
-				
-					//compare region names					
-					if( nameReplaced == majParty[i].region) {
-						
-						tempMaj = (majParty[i].majority).toLowerCase();
-						break;
-					}
-					// else 
-						// console.log("Did not match " + nameReplaced +  " and " + majParty[i].region);
-					
+				//draw differently if filter checkbox is used
+				if( filterChecked ) {
+					return drawFiltered(i);
 				}
-
-				return partyColor[tempMaj];
+				else
+					return drawMajority(d);
 			})
             .style("stroke", "white")
 
@@ -84,11 +71,18 @@ function draw(regions)
 						var region = formatString(temp[i].region);
 						var name = formatString(d.properties.name);
 						if(region == name) {
-							tooltip += "<br><font color='" + partyColor[temp[i].parti.toLowerCase()] + "'> " + temp[i].parti +  " : " + temp[i].procent + "%</font>";
+							var rgb = partyColor[formatString(temp[i].parti)];
+
+							var hex = rgbToHex(rgb);
+							if(filterChecked && partyToFilter == temp[i].parti)
+								tooltip += "<br><font color=" + hex + "> " + temp[i].parti +  " : " + temp[i].procent + "%</font>";
+							else if(filterChecked && partyToFilter != temp[i].parti)
+								tooltip += "<br>" + temp[i].parti +  " : " + temp[i].procent + "%";
+							else
+								tooltip += "<br><font color=" + hex + "> " + temp[i].parti +  " : " + temp[i].procent + "%</font>";
 						}
 					}
 
-					
 					return tooltip;
 				})
 				.style("left", (d3.event.pageX + 10) + "px")		
@@ -100,6 +94,43 @@ function draw(regions)
 					.style("opacity", 0);		
 			})
 };
+
+
+function drawFiltered(i) {
+	
+	var colorPercent = filteredPartyPercentList[i] / 100;
+	
+	//Multply color values with election percentages
+	var colorString =   partyColor[ partyToFilter.toLowerCase()];
+    var colorsOnly = colorString.substring(colorString.indexOf('(') + 1, colorString.lastIndexOf(')')).split(/,\s*/);
+    var red 	= Math.floor( colorsOnly[0] * colorPercent );
+    var green = Math.floor( colorsOnly[1] * colorPercent );
+	var blue 	= Math.floor( colorsOnly[2] * colorPercent );
+	
+	//reconvert the color to a rgb string
+	var resColor = "rgb(" + red + "," + green + "," + blue + ")";
+	
+	//return the color
+	return  resColor;
+}
+
+function drawMajority(d) {
+	var tempMaj = "";
+	
+	//some string formating is done n order to compaare region name
+	var nameReplaced = replaceSpecialChars( d.properties.name ).toLowerCase();
+	
+	//Seach through majParty  until region names match, use the maj-party to set color
+	for (var i = 0; i < majParty.length; i++) {
+		//compare region names					
+		if( nameReplaced == majParty[i].region) {
+			tempMaj = (majParty[i].majority).toLowerCase();
+			break;
+		}	
+	}
+	
+	return partyColor[tempMaj];
+}
 
 //Zoom and panning method
 function move() {
