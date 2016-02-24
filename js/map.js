@@ -39,7 +39,7 @@ function draw(regions)
 				
 				//draw differently if filter checkbox is used
 				if( filterChecked ) {
-					return drawFiltered(i);
+					return drawFiltered(d, i);
 				}
 				else
 					return drawMajority(d);
@@ -95,9 +95,12 @@ function draw(regions)
 			})
 };
 
+function drawFiltered(d, i) {
 
-function drawFiltered(i) {
+	//Test log: Seems correct comparing to the excell
+	//console.log("index = " + i + ", name = " + d.properties.name + ", percent = " + filteredPartyPercentList[i]);
 	
+	//get the percentage from the list created n filterparty
 	var colorPercent = filteredPartyPercentList[i] / 100;
 	
 	//Multply color values with election percentages
@@ -107,9 +110,14 @@ function drawFiltered(i) {
     var green = Math.floor( colorsOnly[1] * colorPercent );
 	var blue 	= Math.floor( colorsOnly[2] * colorPercent );
 	
+	//Normalize the color values
+	red		= Math.floor( (red / maxRed) * 255);
+	green 	= Math.floor( (green / maxGreen) * 255);
+	blue 	= Math.floor( (blue / maxBlue) * 255);
+	
 	//reconvert the color to a rgb string
 	var resColor = "rgb(" + red + "," + green + "," + blue + ")";
-	
+
 	//return the color
 	return  resColor;
 }
