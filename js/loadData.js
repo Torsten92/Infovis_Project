@@ -1,14 +1,13 @@
+
 //Load data
 function loadData(value) {
-    //console.log(value);
-    var dataset = "Data/Swedish_Election_" + value + ".csv";
-    var population = "Data/population.csv";
-    var income = "Data/income.csv";
-    var education = "Data/education.csv";
 
+    dataset = "Data/Swedish_Election_" + value + ".csv";
     d3.csv(dataset, function(data) {
         createMajorityList(data);
+        dataset = data;
     });
+    
 
     //Load the topojson data with "svenska kommuner"
     d3.json("data/swe_mun.topojson", function(error, sweden) {
@@ -32,11 +31,7 @@ function createMajorityList(data) {
 	
 		var majority = data[k].parti;
 		var votePerc = parseFloat(data[k].procent);
-		var region = data[k].region;
-		
-		region = replaceSpecialChars(region);
-		region = region.toLowerCase();
-		//console.log(region);
+		var region = formatString(data[k].region);
 	
 		for (var i = k; i < k+11; i++) {
 			
@@ -46,23 +41,9 @@ function createMajorityList(data) {
 			}
 		}
 		
-		//remove the numbers in the region name
-		region = region.substring(5, region.length);
-		
 		majParty[listIndex] = {region, majority, votePerc};
 		
 		k += 11;
 		listIndex++;
 	}
-}
-
-function replaceSpecialChars (str) {
-	str = str.replace(/�/g, "8"); 
-	str = str.replace(/å/g, "8");  
-	str = str.replace(/ä/g, "8");  
-	str = str.replace(/ö/g, "8"); 
-	str = str.replace(/Å/g, "8"); 
-	str = str.replace(/Ä/g, "8"); 
-	str = str.replace(/Ö/g, "8"); 
-	return str;
 }

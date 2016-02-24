@@ -1,8 +1,4 @@
 
-var partyColor = { "socialdemokraterna": "red", "moderaterna": "blue","centerpartiet": "green",
-					"folkpartiet": "green", "kristdemokraterna": "green", "miljöpartiet": "green", 
-					"vänsterpartiet": "green", "sverigedemokraterna": "yellow"};
-
 var zoom = d3.behavior.zoom()
 .scaleExtent([0.5, 8])
 .on("zoom", move);
@@ -58,7 +54,7 @@ function draw(regions)
 						// console.log("Did not match " + nameReplaced +  " and " + majParty[i].region);
 					
 				}
-				
+
 				return partyColor[tempMaj];
 			})
             .style("stroke", "white")
@@ -67,34 +63,43 @@ function draw(regions)
 			.on("mouseover", function(d) {
 				div.transition()		
 					.duration(200)
-					.style("visability", true)
 					.style("opacity", 1);
 				div.html( function() {
-					return d.properties.name + 
-					"<br><font color='red'> parti1 43%</font>" +
-					"<br><font color='blue'> parti2 77%</font>";
+					var tooltip = "<font size='4'> " + d.properties.name + "</font>";
+					
+					var temp = [];
+					var x = 0;			        
+			        dataset.forEach(function(d2, i) {
+			        	if(isNumeric(d2.procent)) {
+				        	temp[x++] = {"region": d2.region, "parti": d2.parti, "procent": d2.procent};
+				        }
+					});
+			        //sortera temp på procent
+			        function compare(a, b) {
+			        	return parseFloat(b.procent) - parseFloat(a.procent);
+			        }
+			        temp.sort(compare);
+
+			        for(var i = 0; i < temp.length; i++) {
+						var region = formatString(temp[i].region);
+						var name = formatString(d.properties.name);
+						if(region == name) {
+							tooltip += "<br><font color='" + partyColor[temp[i].parti.toLowerCase()] + "'> " + temp[i].parti +  " : " + temp[i].procent + "%</font>";
+						}
+					}
+
+					
+					return tooltip;
 				})
 				.style("left", (d3.event.pageX + 10) + "px")		
-                .style("top", (d3.event.pageY - 28) + "px");	
-            })					
-			.on("mouseout", function(d) {	
+                .style("top", (d3.event.pageY - 28) + "px")
+            })
+			.on("mouseout", function(d) {
 				div.transition()		
 					.duration(500)
-					.style("visability", false)
 					.style("opacity", 0);		
 			})
 };
-
-function formatString(str) {
-	res = str
-		.replace("Ã¥", 'å')
-		.replace("Ã…", 'å')
-		.replace("Ã¤", 'ä')
-		.replace("Ã„", 'ä')
-		.replace("Ã¶", 'ö')
-		.replace("Ã–", 'ö');	
-	return res;
-}
 
 //Zoom and panning method
 function move() {

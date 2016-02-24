@@ -11,23 +11,24 @@ var income = "Data/income.csv";
 var education = "Data/education.csv";
 
 function replaceSpecialChars (str) {
-	str = str.replace(/�/g, "8"); 
-	str = str.replace(/å/g, "8");  
-	str = str.replace(/ä/g, "8");  
-	str = str.replace(/ö/g, "8"); 
-	str = str.replace(/Å/g, "8"); 
-	str = str.replace(/Ä/g, "8"); 
-	str = str.replace(/Ö/g, "8"); 
+	str = str.replace(/�/g, "Q"); 
+	str = str.replace(/å/g, "Q");  
+	str = str.replace(/ä/g, "Q");  
+	str = str.replace(/ö/g, "Q"); 
+	str = str.replace(/Å/g, "Q"); 
+	str = str.replace(/Ä/g, "Q"); 
+	str = str.replace(/Ö/g, "Q"); 
 	return str;
 }
 
+function isNumeric(str) {
+  return !isNaN(parseFloat(str)) && isFinite(str);
+}
+
 function formatString(str) {
-	res = str
-		.replace("Ã¥", 'å')
-		.replace("Ã…", 'å')
-		.replace("Ã¤", 'ä')
-		.replace("Ã„", 'ä')
-		.replace("Ã¶", 'ö')
-		.replace("Ã–", 'ö');	
-	return res;
+	str = replaceSpecialChars(str);
+	str = str.toLowerCase();
+	if(isNumeric(str[0]))
+		str = str.substring(5, str.length);
+	return str;
 }
