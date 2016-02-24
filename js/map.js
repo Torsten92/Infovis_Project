@@ -92,6 +92,12 @@ function draw(regions)
 			.on("mouseout", function(d) {
 				tooltipDiv.transition().style("opacity", 0);		
 			})
+			
+			tooltipDiv.on("mouseover", function(d) {
+				tooltipDiv.style("opacity", 0)
+					.style("left", -1000 + "px")
+					.style("top", -1000 + "px");
+			});
 };
 
 function drawFiltered(d, i) {
