@@ -1,8 +1,4 @@
 
-var partyColor = { "socialdemokraterna": "red", "moderaterna": "blue","centerpartiet": "green",
-					"folkpartiet": "green", "kristdemokraterna": "green", "miljöpartiet": "green", 
-					"vänsterpartiet": "green", "sverigedemokraterna": "yellow"};
-
 var zoom = d3.behavior.zoom()
 .scaleExtent([0.5, 8])
 .on("zoom", move);
@@ -39,22 +35,15 @@ function draw(regions)
             .attr("class", "country")
             .attr("d", path)
             .style('stroke-width', 0.1)
-            .style("fill", function(d) {
+            .style("fill", function(d, i) {
 				
-				var tempMaj = "";
-				
-				var nameReplaced = replaceSpecialChars( d.properties.name ).toLowerCase();
-				
-				//Seach through majParty  until region names match, use the maj-party to set color
-				for (var i = 0; i < majParty.length; i++) {
-					//compare region names					
-					if( nameReplaced == majParty[i].region) {
-						tempMaj = (majParty[i].majority).toLowerCase();
-						break;
-					}	
+				//draw differently if filter checkbox is used
+				if( filterChecked ) {
+					return drawFiltered(i);
 				}
+				else
+					return drawMajority(d);
 				
-				return partyColor[tempMaj];
 			})
             .style("stroke", "white")
 
@@ -80,15 +69,42 @@ function draw(regions)
 			})
 };
 
-function formatString(str) {
-	res = str
-		.replace("Ã¥", 'å')
-		.replace("Ã…", 'å')
-		.replace("Ã¤", 'ä')
-		.replace("Ã„", 'ä')
-		.replace("Ã¶", 'ö')
-		.replace("Ã–", 'ö');	
-	return res;
+function drawFiltered(i) {
+	
+	var colorPercent = filteredPartyPercentList[i] / 100;
+	
+	//Multply color values with election percentages
+	var colorString =   partyColor[ partyToFilter.toLowerCase()];
+    var colorsOnly = colorString.substring(colorString.indexOf('(') + 1, colorString.lastIndexOf(')')).split(/,\s*/);
+    var red 	= Math.floor( colorsOnly[0] * colorPercent );
+    var green = Math.floor( colorsOnly[1] * colorPercent );
+	var blue 	= Math.floor( colorsOnly[2] * colorPercent );
+	
+	//reconvert the color to a rgb string
+	var resColor = "rgb(" + red + "," + green + "," + blue + ")";
+	
+	console.log(resColor);
+	
+	//return the color
+	return  resColor;
+}
+
+function drawMajority(d) {
+	var tempMaj = "";
+	
+	//some string formating is done n order to compaare region name
+	var nameReplaced = replaceSpecialChars( d.properties.name ).toLowerCase();
+	
+	//Seach through majParty  until region names match, use the maj-party to set color
+	for (var i = 0; i < majParty.length; i++) {
+		//compare region names					
+		if( nameReplaced == majParty[i].region) {
+			tempMaj = (majParty[i].majority).toLowerCase();
+			break;
+		}	
+	}
+	
+	return partyColor[tempMaj];
 }
 
 //Zoom and panning method

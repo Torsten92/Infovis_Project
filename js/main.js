@@ -1,7 +1,12 @@
 
-var partyColor = { "socialdemokraterna": "red", "moderaterna": "blue","centerpartiet": "green",
-					"folkpartiet": "green", "kristdemokraterna": "green", "miljöpartiet": "green", 
-					"vänsterpartiet": "green", "sverigedemokraterna": "yellow"};
+var partyColor = { 	"socialdemokraterna": 	"rgb(255, 0, 0)", 
+								"moderaterna": 				"rgb(0, 0, 255)",
+								"centerpartiet": 				"rgb(150, 0, 0)",
+								"folkpartiet": 					"rgb(0, 0, 150)", 
+								"kristdemokraterna": 		"rgb(150, 150, 255)", 
+								"miljöpartiet": 					"rgb(0, 255, 0)", 
+								"vänsterpartiet": 				"rgb(255, 150, 150)", 
+								"sverigedemokraterna": 	"rgb(150, 150, 0)"};
 
 //dataset might be different depending on the slider position. It will be initialized on startup in loadData()
 var dataset;

@@ -1,18 +1,18 @@
+var mun;
+
 //Load data
 function loadData(value) {
     //console.log(value);
-    var dataset = "Data/Swedish_Election_" + value + ".csv";
-    var population = "Data/population.csv";
-    var income = "Data/income.csv";
-    var education = "Data/education.csv";
-
+    dataset = "Data/Swedish_Election_" + value + ".csv";
+	
     d3.csv(dataset, function(data) {
+		dataset = data;
         createMajorityList(data);
     });
 
     //Load the topojson data with "svenska kommuner"
     d3.json("data/swe_mun.topojson", function(error, sweden) {
-        var mun = topojson.feature(sweden, sweden.objects.swe_mun).features;
+		mun = topojson.feature(sweden, sweden.objects.swe_mun).features;
         draw(mun);
     });
 }
@@ -53,15 +53,4 @@ function createMajorityList(data) {
 		k += 11;
 		listIndex++;
 	}
-}
-
-function replaceSpecialChars (str) {
-	str = str.replace(/�/g, "8"); 
-	str = str.replace(/å/g, "8");  
-	str = str.replace(/ä/g, "8");  
-	str = str.replace(/ö/g, "8"); 
-	str = str.replace(/Å/g, "8"); 
-	str = str.replace(/Ä/g, "8"); 
-	str = str.replace(/Ö/g, "8"); 
-	return str;
 }
