@@ -2,6 +2,10 @@
 function loadData(value) {
     //console.log(value);
     var dataset = "Data/Swedish_Election_" + value + ".csv";
+    var population = "Data/population.csv";
+    var income = "Data/income.csv";
+    var education = "Data/education.csv";
+
     d3.csv(dataset, function(data) {
         createMajorityList(data);
     });
