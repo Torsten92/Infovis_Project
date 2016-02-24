@@ -9,7 +9,6 @@ function loadData(value) {
     //Load the topojson data with "svenska kommuner"
     d3.json("data/swe_mun.topojson", function(error, sweden) {
         var mun = topojson.feature(sweden, sweden.objects.swe_mun).features;
-        //console.log(mun);
         draw(mun);
     });
 }

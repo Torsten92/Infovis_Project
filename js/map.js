@@ -43,18 +43,11 @@ function draw(regions)
 				
 				//Seach through majParty  until region names match, use the maj-party to set color
 				for (var i = 0; i < majParty.length; i++) {
-				
 					//compare region names					
 					if( nameReplaced == majParty[i].region) {
-						
-						console.log("Matched " + nameReplaced +  " and " + majParty[i].region); 
-						
 						tempMaj = (majParty[i].majority).toLowerCase();
 						break;
-					}
-					// else 
-						// console.log("Did not match " + nameReplaced +  " and " + majParty[i].region);
-					
+					}	
 				}
 				
 
