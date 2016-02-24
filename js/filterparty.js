@@ -1,5 +1,3 @@
-var filterChecked = false;
-var partyToFilter = "socialdemokraterna";
 
 var filteredPartyPercentList = [];
 
@@ -7,13 +5,13 @@ var maxRed = 1, maxGreen = 1, maxBlue = 1;
 
 var startIndex;
 var startIndexList = { 	"moderaterna": 0,
-								"centerpartiet": 1,
-								"folkpartiet": 2, 
-								"kristdemokraterna": 3, 
-								"miljöpartiet": 4, 
-								"socialdemokraterna": 5,
-								"vänsterpartiet": 6, 
-								"sverigedemokraterna": 7};
+						"centerpartiet": 1,
+						"folkpartiet": 2, 
+						"kristdemokraterna": 3, 
+						"miljöpartiet": 4, 
+						"socialdemokraterna": 5,
+						"vänsterpartiet": 6, 
+						"sverigedemokraterna": 7};
 
 //called when filter checkbox is changed
 function filterByParty( checkbox ) {

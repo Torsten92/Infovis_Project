@@ -43,7 +43,6 @@ function draw(regions)
 				}
 				else
 					return drawMajority(d);
-				
 			})
             .style("stroke", "white")
 
@@ -51,26 +50,53 @@ function draw(regions)
 			.on("mouseover", function(d) {
 				div.transition()		
 					.duration(200)
-					.style("visability", true)
 					.style("opacity", 1);
 				div.html( function() {
-					return d.properties.name + 
-					"<br><font color='red'> parti1 43%</font>" +
-					"<br><font color='blue'> parti2 77%</font>";
+					var tooltip = "<font size='4'> " + d.properties.name + "</font>";
+					
+					var temp = [];
+					var x = 0;			        
+			        dataset.forEach(function(d2, i) {
+			        	if(isNumeric(d2.procent)) {
+				        	temp[x++] = {"region": d2.region, "parti": d2.parti, "procent": d2.procent};
+				        }
+					});
+			        //sortera temp på procent
+			        function compare(a, b) {
+			        	return parseFloat(b.procent) - parseFloat(a.procent);
+			        }
+			        temp.sort(compare);
+
+			        for(var i = 0; i < temp.length; i++) {
+						var region = formatString(temp[i].region);
+						var name = formatString(d.properties.name);
+						if(region == name) {
+							var rgb = partyColor[formatString(temp[i].parti)];
+
+							var hex = rgbToHex(rgb);
+							if(filterChecked && partyToFilter == temp[i].parti)
+								tooltip += "<br><font color=" + hex + "> " + temp[i].parti +  " : " + temp[i].procent + "%</font>";
+							else if(filterChecked && partyToFilter != temp[i].parti)
+								tooltip += "<br>" + temp[i].parti +  " : " + temp[i].procent + "%";
+							else
+								tooltip += "<br><font color=" + hex + "> " + temp[i].parti +  " : " + temp[i].procent + "%</font>";
+						}
+					}
+
+					return tooltip;
 				})
 				.style("left", (d3.event.pageX + 10) + "px")		
-                .style("top", (d3.event.pageY - 28) + "px");	
-            })					
-			.on("mouseout", function(d) {	
+                .style("top", (d3.event.pageY - 28) + "px")
+            })
+			.on("mouseout", function(d) {
 				div.transition()		
 					.duration(500)
-					.style("visability", false)
 					.style("opacity", 0);		
 			})
 };
 
 function drawFiltered(d, i) {
-	
+
 	//Test log: Seems correct comparing to the excell
 	//console.log("index = " + i + ", name = " + d.properties.name + ", percent = " + filteredPartyPercentList[i]);
 	
@@ -91,7 +117,11 @@ function drawFiltered(d, i) {
 	
 	//reconvert the color to a rgb string
 	var resColor = "rgb(" + red + "," + green + "," + blue + ")";
+<<<<<<< HEAD
 
+=======
+	
+>>>>>>> c70f39d31d2c7cdf7794073dd72a0f78c022e97f
 	//return the color
 	return  resColor;
 }

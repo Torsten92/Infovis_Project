@@ -1,3 +1,4 @@
+
 var mun;
 
 //Load data
@@ -8,7 +9,9 @@ function loadData(value) {
     d3.csv(dataset, function(data) {
 		dataset = data;
         createMajorityList(data);
+        dataset = data;
     });
+    
 
     //Load the topojson data with "svenska kommuner"
     d3.json("data/swe_mun.topojson", function(error, sweden) {
@@ -31,11 +34,7 @@ function createMajorityList(data) {
 	
 		var majority = data[k].parti;
 		var votePerc = parseFloat(data[k].procent);
-		var region = data[k].region;
-		
-		region = replaceSpecialChars(region);
-		region = region.toLowerCase();
-		//console.log(region);
+		var region = formatString(data[k].region);
 	
 		for (var i = k; i < k+11; i++) {
 			
@@ -44,9 +43,6 @@ function createMajorityList(data) {
 				votePerc = data[i].procent;
 			}
 		}
-		
-		//remove the numbers in the region name
-		region = region.substring(5, region.length);
 		
 		majParty[listIndex] = {region, majority, votePerc};
 		
