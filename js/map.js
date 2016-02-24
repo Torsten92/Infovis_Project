@@ -117,11 +117,7 @@ function drawFiltered(d, i) {
 	
 	//reconvert the color to a rgb string
 	var resColor = "rgb(" + red + "," + green + "," + blue + ")";
-<<<<<<< HEAD
 
-=======
-	
->>>>>>> c70f39d31d2c7cdf7794073dd72a0f78c022e97f
 	//return the color
 	return  resColor;
 }
