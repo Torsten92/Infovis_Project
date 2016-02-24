@@ -1,3 +1,8 @@
+
+var partyColor = { "socialdemokraterna": "red", "moderaterna": "blue","centerpartiet": "green",
+					"folkpartiet": "green", "kristdemokraterna": "green", "miljöpartiet": "green", 
+					"vänsterpartiet": "green", "sverigedemokraterna": "yellow"};
+
 var zoom = d3.behavior.zoom()
 .scaleExtent([0.5, 8])
 .on("zoom", move);
@@ -10,12 +15,11 @@ var svg = d3.select("#map").append("svg")
 
 var g = svg.append("g");
 
-var tooltip = [];
-
 var div = d3.select("body").append("div")	
-		.attr("class", "tooltip")				
-		//.style("opacity", 0);
-		.style("visability", false)
+		.attr("class", "tooltip")
+		.style("opacity", 1)
+		.style("visability", false);
+
 
 //Sets the map projection
 var projection = d3.geo.mercator()
@@ -47,8 +51,6 @@ function draw(regions)
 					//compare region names					
 					if( nameReplaced == majParty[i].region) {
 						
-						console.log("Matched " + nameReplaced +  " and " + majParty[i].region); 
-						
 						tempMaj = (majParty[i].majority).toLowerCase();
 						break;
 					}
@@ -57,40 +59,30 @@ function draw(regions)
 					
 				}
 				
-
-				//return color depending on leading party
-				switch (tempMaj) {
-					
-					case "socialdemokraterna":
-						return "red";
-					break;
-					case "moderaterna":
-						return "blue";
-					break;
-					case "centerpartiet":
-						return "green";
-					break;
-					case "folkpartiet":
-						return "green";
-					break;
-					case "kristdemokraterna":
-						return "green";
-					break;
-					case "miljöpartiet":
-						return "green";
-					break;
-					case "vänsterpartiet":
-						return "green";
-					break;
-					case "sverigedemokraterna":
-						return "yellow";
-					break;
-				}
-				
-				//return black as default color
-				return "black";
+				return partyColor[tempMaj];
 			})
             .style("stroke", "white")
+
+            //Tooltip
+			.on("mouseover", function(d) {
+				div.transition()		
+					.duration(200)
+					.style("visability", true)
+					.style("opacity", 1);
+				div.html( function() {
+					return d.properties.name + 
+					"<br><font color='red'> parti1 43%</font>" +
+					"<br><font color='blue'> parti2 77%</font>";
+				})
+				.style("left", (d3.event.pageX + 10) + "px")		
+                .style("top", (d3.event.pageY - 28) + "px");	
+            })					
+			.on("mouseout", function(d) {	
+				div.transition()		
+					.duration(500)
+					.style("visability", false)
+					.style("opacity", 0);		
+			})
 };
 
 function formatString(str) {
