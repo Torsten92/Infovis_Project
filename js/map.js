@@ -3,17 +3,26 @@ var zoom = d3.behavior.zoom()
 .scaleExtent([0.5, 8])
 .on("zoom", move);
 
-//Assings the svg canvas to the map div
+var width = document.getElementById("map").clientWidth - 5;
+var height = document.getElementById("map").clientHeight - 5;
+
+//Assigns the svg canvas to the map div
 var svg = d3.select("#map").append("svg")
-        .attr("width", 400)
-        .attr("height", 600)
+		.attr("class", "svg")
+        .attr("width", width)
+        .attr("height", height)
         .call(zoom);
+
+//Used for displaying text while the "Filter by specific party" is checked
+var filtertextDiv = d3.select("#map").append("div")
+		.attr("class", "filteredPartyText")
+		.style("opacity", 0);
 
 var g = svg.append("g");
 
 var tooltipDiv = d3.select("body").append("div")	
 		.attr("class", "tooltip")
-		.style("opacity", 1)
+		.style("opacity", 0.5)
 		.style("visability", false);
 
 
@@ -74,11 +83,26 @@ function draw(regions)
 			})
             .style("stroke", "white")
 
+			//On mouse  click, filter region
+			.on("click", function(d) {
+				
+				if(regionIsFiltered && filteredRegionName == d.properties.name) {
+					regionIsFiltered = false;
+					redrawNoFilter();
+				}
+				else {
+					filteredRegionName = d.properties.name;
+					regionIsFiltered = true;
+					redrawNoFilter();
+					redrawWithFilter(d.properties.name.toLowerCase(), true);
+				}
+			})
+			
             //Tooltip
 			.on("mouseover", function(d,i) { 
 				tooltipDiv.transition()	
 					.duration(200)
-					.style("opacity", 1);
+					.style("opacity", 0.9);
 				tooltipDiv.html( function() {
 					var tooltip = "<font size='4'> " + d.properties.name + "</font>";
 					
@@ -100,7 +124,8 @@ function draw(regions)
 						var region = formatString(temp[i].region, true);
 						var name = formatString(d.properties.name, true);
 						if(region == name) {
-							var rgb = partyColor[formatString(temp[i].parti, true)];
+
+							var rgb = partyColor[ formatString(temp[i].parti, true) ];
 							var hex = rgbToHex(rgb);
 							
 							if(filterChecked && formatString(partyToFilter, true) == formatString(temp[i].parti, true))
@@ -114,8 +139,8 @@ function draw(regions)
 					
 					return tooltip;
 				})
-				.style("left", (d3.event.pageX + 10) + "px")		
-                .style("top", (d3.event.pageY - 28) + "px")
+				.style("left", (d3.event.pageX + 50) + "px")		
+                .style("top", (d3.event.pageY - 100) + "px")
             })
 			.on("mouseout", function(d) {
 				tooltipDiv.transition().style("opacity", 0);		
@@ -128,13 +153,16 @@ function draw(regions)
 			});
 };
 
+function setTooltipText() {
+	
+}
+
 function drawFiltered(d, i) {
 
 	var regionPercent;
 	
-	//replace åäö in order to compare with election data
 	var geoRegionString = d.properties.name;
-	geoRegionString = replaceSpecialChars( geoRegionString.toLowerCase() );
+	geoRegionString = geoRegionString.toLowerCase();
 	
 	//find corresponding region in filteredPartyPercentList to get right percent
 	for(var k = 0; k < filteredPartyPercentList.length; k++) {
@@ -170,7 +198,7 @@ function drawMajority(d) {
 	var tempMaj = "";
 	
 	//some string formating is done n order to compaare region name
-	var nameReplaced = replaceSpecialChars( d.properties.name ).toLowerCase();
+	var nameReplaced = ( d.properties.name ).toLowerCase();
 	
 	//Seach through majParty  until region names match, use the maj-party to set color
 	for (var i = 0; i < majParty.length; i++) {

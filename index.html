@@ -6,7 +6,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title></title>
+        <title>Sveriges Rikes Valdata</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -36,58 +36,72 @@
         <script src="js/loadData.js"></script>
         <script src="js/map.js"></script>
         <script src="js/filterparty.js"></script>
+        <script src="js/filterRegion.js"></script>
         
 		<div id="menu">
+		
 			<div id="menuitem">
-			
+				<label>
+					<font size="4">
+						Sök kommun
+					</font>
+				</label>
+				<input id="searchField" type="text" onKeyUp="searchUpdate(this.value)" onClick="this.select();">
+			</div>
+		
+			<div id="menuitem">
 				<div id="left40">
 					<label>
-						Valår: <span id="slider-value"></span>
+						<font size="4">
+							Valår:
+    						<span id="slider-value"></span>
+                        </font>
 					</label>
 				</div>
 				
 				<div id="right60">
 					<input id="voteslider" type="range" min="2002" max="2014" value="2006" step="4" onchange="votingtext(this.value)" />
 				</div>
+			</div>
+			
+			<div id="menuitem">
+				<div>
+					<label>
+						<font size="4">
+							Välj vy:
+						</font>
+					</label>
+				</div>
+				
+				<div id="subItem">
+					<input type="radio" checked="true" value="None" id="checkboxMaj" name="checkMaj" onchange="showMajority(this)"/>
+					<label>
+						Majoritet per kommun
+					</label>
+				</div>
+				
+				<div id="subItem">
+					<input type="radio" checked="false" value="None" id="checkbox1" name="check1" onchange="filterByParty(this)"/>
+					<label>
+						Enstaka parti
+					</label>
+					<select id="dropmenu" disabled="true" onchange="changeFilterParty()">
+							<option value="Socialdemokraterna">Socialdemokraterna</option>
+							<option value="Moderaterna">Moderaterna</option>
+							<option value="Vänsterpartiet">Vänsterpartiet</option>
+							<option value="Kristdemokraterna">Kristdemokraterna</option>
+							<option value="Miljöpartiet">Miljöpartiet</option>
+							<option value="Centerpartiet">Centerpartiet</option>
+							<option value="Sverigedemokraterna">Sverigedemokraterna</option>
+							<option value="Folkpartiet">Folkpartiet</option>
+						</select>	
+				</div>
+			</div>
 
-			</div>
-			<div id="menuitem">
-				<form>
-					<input type="radio" name="displaytype" value="majority" checked> Visa majoritet per kommun<br>
-					<input type="radio" name="displaytype" value="mix"> Blanda partifärger tillsammans
-				</form>
-			</div>
-			
-			<div id="menuitem">
-				<input type="checkbox" value="None" id="checkbox1" name="check1" onchange="filterByParty(this)"/>
-				<label>
-					Filtrera på parti
-				</label>
-				<select id="dropmenu" onchange="changeFilterParty()">
-						<option value="Socialdemokraterna">Socialdemokraterna</option>
-						<option value="Moderaterna">Moderaterna</option>
-						<option value="Vänsterpartiet">Vänsterpartiet</option>
-						<option value="Kristdemokraterna">Kristdemokraterna</option>
-						<option value="Miljöpartiet">Miljöpartiet</option>
-						<option value="Centerpartiet">Centerpartiet</option>
-						<option value="Sverigedemokraterna">Sverigedemokraterna</option>
-						<option value="Folkpartiet">Folkpartiet</option>
-					</select>	
-			</div>
-			
-			<div id="menuitem">
-				<input type="checkbox" value="None" id="checkbox2" name="check2" />
-				<label>
-					Hitta kluster (TODO)
-				</label>
-			</div>
-			
-			<div id="menuitem">
-				<input type="checkbox" value="None" id="checkbox2" name="check2" />
-				<label>
-					Filtrera på inkomst
-				</label>
-			</div>
+            <div id="details">
+                hej
+            </div>
+
 		</div>
 	
         <script>
@@ -102,6 +116,8 @@
 		        // Send newValue to the map for visualization
 		        loadData(newValue);
 		    }
+            //addEvent(window, "resize", onResize());
+            window.addEventListener("resize", onResize);
 		</script>
 
     </body>
