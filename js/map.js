@@ -22,7 +22,7 @@ var g = svg.append("g");
 
 var tooltipDiv = d3.select("body").append("div")	
 		.attr("class", "tooltip")
-		.style("opacity", 1)
+		.style("opacity", 0.5)
 		.style("visability", false);
 
 
@@ -59,7 +59,7 @@ function draw(regions)
 			.on("mouseover", function(d,i) { 
 				tooltipDiv.transition()	
 					.duration(200)
-					.style("opacity", 1);
+					.style("opacity", 0.9);
 				tooltipDiv.html( function() {
 					var tooltip = "<font size='4'> " + d.properties.name + "</font>";
 					
@@ -96,8 +96,8 @@ function draw(regions)
 					
 					return tooltip;
 				})
-				.style("left", (d3.event.pageX + 10) + "px")		
-                .style("top", (d3.event.pageY - 28) + "px")
+				.style("left", (d3.event.pageX + 50) + "px")		
+                .style("top", (d3.event.pageY - 100) + "px")
             })
 			.on("mouseout", function(d) {
 				tooltipDiv.transition().style("opacity", 0);		
