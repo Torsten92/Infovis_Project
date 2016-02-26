@@ -47,7 +47,7 @@ function draw(regions)
             .style("stroke", "white")
 
             //Tooltip
-			.on("mouseover", function(d) {
+			.on("mouseover", function(d,i) { 
 				tooltipDiv.transition()	
 					.duration(200)
 					.style("opacity", 1);
@@ -83,7 +83,7 @@ function draw(regions)
 								tooltip += "<br><font color=" + hex + "> " + temp[i].parti +  " : " + temp[i].procent + "%</font>";
 						}
 					}
-
+					
 					return tooltip;
 				})
 				.style("left", (d3.event.pageX + 10) + "px")		
@@ -102,18 +102,29 @@ function draw(regions)
 
 function drawFiltered(d, i) {
 
-	//Test log: Seems correct comparing to the excell
-	//console.log("index = " + i + ", name = " + d.properties.name + ", percent = " + filteredPartyPercentList[i]);
+	var regionPercent;
 	
-	//get the percentage from the list created n filterparty
-	var colorPercent = filteredPartyPercentList[i] / 100;
+	//replace åäö in order to compare with election data
+	var geoRegionString = d.properties.name;
+	geoRegionString = replaceSpecialChars( geoRegionString.toLowerCase() );
+	
+	//find corresponding region in filteredPartyPercentList to get right percent
+	for(var k = 0; k < filteredPartyPercentList.length; k++) {
+		
+		var dataRegionString = formatString( filteredPartyPercentList[k][0], true );
+		
+		if( geoRegionString == dataRegionString ) {
+			regionPercent = filteredPartyPercentList[k][1] / 100;
+			break;
+		}
+	}
 	
 	//Multply color values with election percentages
-	var colorString =   partyColor[ partyToFilter.toLowerCase()];
+	var colorString =   partyColor[ partyToFilter];
     var colorsOnly = colorString.substring(colorString.indexOf('(') + 1, colorString.lastIndexOf(')')).split(/,\s*/);
-    var red 	= Math.floor( colorsOnly[0] * colorPercent );
-    var green = Math.floor( colorsOnly[1] * colorPercent );
-	var blue 	= Math.floor( colorsOnly[2] * colorPercent );
+    var red 	= Math.floor( colorsOnly[0] * regionPercent );
+    var green = Math.floor( colorsOnly[1] * regionPercent );
+	var blue 	= Math.floor( colorsOnly[2] * regionPercent );
 	
 	//Normalize the color values
 	red		= Math.floor( (red / maxRed) * 255);

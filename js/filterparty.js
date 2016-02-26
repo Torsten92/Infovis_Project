@@ -51,7 +51,6 @@ function filterByParty( checkbox ) {
 
 //called when drop down menu is changed
 function changeFilterParty() {
-	//console.log("changefilterparty");
 	var e = document.getElementById("dropmenu");
 	partyToFilter = e.options[e.selectedIndex].text.toString().toLowerCase();
 	
@@ -78,7 +77,7 @@ function createList(index) {
 	var listIndex = 0;	
 	while (dataset[index]) {
 		
-		filteredPartyPercentList[listIndex] = dataset[index].procent;
+		filteredPartyPercentList[listIndex] = [dataset[index].region,  dataset[index].procent];
 		
 		index += 11;
 		listIndex++;
@@ -96,7 +95,7 @@ function findMaxRGB() {
 	for (var i = 0; i < filteredPartyPercentList.length; i++) {
 
 		//get the percentage from the list created n filterparty
-		var colorPercent = filteredPartyPercentList[i] / 100;
+		var colorPercent = filteredPartyPercentList[i][1] / 100;
 
 		//Multply color values with election percentages
 		var colorString =   partyColor[ partyToFilter.toLowerCase()];
