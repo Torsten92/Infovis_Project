@@ -24,6 +24,8 @@ var education = "Data/education.csv";
 var filterChecked = false;
 var partyToFilter = "socialdemokraterna";
 
+var regionIsFiltered = false;
+
 function isNumeric(str) {
   return !isNaN(parseFloat(str)) && isFinite(str);
 }

@@ -55,6 +55,21 @@ function draw(regions)
 			})
             .style("stroke", "white")
 
+			//On mouse  click, filter region
+			.on("click", function(d) {
+				
+				if(regionIsFiltered && filteredRegionName == d.properties.name) {
+					regionIsFiltered = false;
+					redrawNoFilter();
+				}
+				else {
+					filteredRegionName = d.properties.name;
+					regionIsFiltered = true;
+					redrawNoFilter();
+					redrawWithFilter(d.properties.name.toLowerCase(), true);
+				}
+			})
+			
             //Tooltip
 			.on("mouseover", function(d,i) { 
 				tooltipDiv.transition()	
