@@ -73,8 +73,6 @@ function draw(regions)
 						var name = formatString(d.properties.name, true);
 						if(region == name) {
 							
-							console.log(partyColor[ formatString(temp[i].parti, true) ]);
-							
 							var rgb = partyColor[ formatString(temp[i].parti, true) ];
 							var hex = rgbToHex(rgb);
 							
