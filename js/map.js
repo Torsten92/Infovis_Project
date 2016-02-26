@@ -25,6 +25,34 @@ var projection = d3.geo.mercator()
 //Creates a new geographic path generator and assing the projection        
 var path = d3.geo.path().projection(projection);
 
+//color legend
+var partyLegend = ["Socialdemokraterna", "Moderaterna", "Centerpartiet", "Folkpartiet", "Kristdemokraterna", "Miljöpartiet", "Vänsterpartiet", "Sverigedemokraterna"];
+
+var color_domain = [0, 50, 150, 350, 750, 1500, 2000, 2500];             
+var color = d3.scale.ordinal()
+  .range(["rgb(255, 0, 0)", "rgb(0, 0, 255)", "rgb(150, 0, 0)","rgb(0, 0, 150)", "rgb(150, 150, 255)", "rgb(0, 255, 0)", "rgb(255, 150, 150)", "rgb(150, 150, 0)"]);
+
+var legend = svg.selectAll("g.legend")
+  .data(color_domain)
+  .enter().append("g")
+  .attr("class", "legend");
+
+var lWidth = 15, lHeight = 15;
+
+legend.append("rect")
+	.attr("x", 20)
+	.attr("y", function(d, i){ return 600 - (i*lHeight) - 2*lWidth;})
+	.attr("width", lWidth)
+	.attr("height", lHeight)
+	.style("fill", color);
+
+legend.append("text")
+	.attr("x", 40)
+	.attr("y", function(d, i){ return 600 - (i*lHeight) - lWidth - 4;})
+	.attr("font-size", "10px")
+	.text(function(d, i){ return partyLegend[i]; });
+
+
 //Draws the map and the points
 function draw(regions)
 {
