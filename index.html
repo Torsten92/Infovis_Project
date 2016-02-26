@@ -42,7 +42,10 @@
 			
 				<div id="left40">
 					<label>
-						Valår: <span id="slider-value"></span>
+						<font size="6">
+							Valår:
+						</font>
+						<span id="slider-value"></span>
 					</label>
 				</div>
 				
@@ -51,28 +54,48 @@
 				</div>
 
 			</div>
-			<div id="menuitem">
+			
+			<!-- <div id="menuitem">
 				<form>
 					<input type="radio" name="displaytype" value="majority" checked> Visa majoritet per kommun<br>
 					<input type="radio" name="displaytype" value="mix"> Blanda partifärger tillsammans
 				</form>
-			</div>
+			</div> -->
 			
+
+
 			<div id="menuitem">
-				<input type="checkbox" value="None" id="checkbox1" name="check1" onchange="filterByParty(this)"/>
-				<label>
-					Filtrera på parti
-				</label>
-				<select id="dropmenu" onchange="changeFilterParty()">
-						<option value="Socialdemokraterna">Socialdemokraterna</option>
-						<option value="Moderaterna">Moderaterna</option>
-						<option value="Vänsterpartiet">Vänsterpartiet</option>
-						<option value="Kristdemokraterna">Kristdemokraterna</option>
-						<option value="Miljöpartiet">Miljöpartiet</option>
-						<option value="Centerpartiet">Centerpartiet</option>
-						<option value="Sverigedemokraterna">Sverigedemokraterna</option>
-						<option value="Folkpartiet">Folkpartiet</option>
-					</select>	
+				<div>
+					<label>
+						<font size="6">
+							Välj vy:
+						</font>
+					</label>
+				</div>
+				
+				<div id="subItem">
+					<input type="radio" checked="true" value="None" id="checkboxMaj" name="checkMaj" onchange="showMajority(this)"/>
+					<label>
+						Majoritet per kommun
+					</label>
+				</div>
+				
+				<div id="subItem">
+					<input type="radio" checked="false" value="None" id="checkbox1" name="check1" onchange="filterByParty(this)"/>
+					<label>
+						Enstaka parti
+					</label>
+					<select id="dropmenu" disabled="true" onchange="changeFilterParty()">
+							<option value="Socialdemokraterna">Socialdemokraterna</option>
+							<option value="Moderaterna">Moderaterna</option>
+							<option value="Vänsterpartiet">Vänsterpartiet</option>
+							<option value="Kristdemokraterna">Kristdemokraterna</option>
+							<option value="Miljöpartiet">Miljöpartiet</option>
+							<option value="Centerpartiet">Centerpartiet</option>
+							<option value="Sverigedemokraterna">Sverigedemokraterna</option>
+							<option value="Folkpartiet">Folkpartiet</option>
+						</select>	
+				</div>
 			</div>
 			
 			<div id="menuitem">

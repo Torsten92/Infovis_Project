@@ -13,8 +13,8 @@ body{
 	float: left;
 }
 #menuitem {
-	padding-top: 10%;
-	padding-left: 10%;
+	padding-top: 5%;
+	padding-left: 5%;
 }
 #map {
 	border-style: solid;
@@ -24,13 +24,17 @@ body{
 }
 
 #left40 {
-	text-align: center;
 	width: 40%;
 	float: left;
 }
 #right60 {
 	width: 60%;
-	float: right;
+	padding-top: 30px;
+	/* float: right; */
+}
+
+#subItem {
+	padding-left: 10px;
 }
 
 
