@@ -50,14 +50,14 @@ var lWidth = 15, lHeight = 15;
 
 legend.append("rect")
 	.attr("x", 20)
-	.attr("y", function(d, i){ return 600 - (i*lHeight) - 2*lWidth;})
+	.attr("y", function(d, i){ return height - (i*lHeight) - 2*lWidth;})
 	.attr("width", lWidth)
 	.attr("height", lHeight)
 	.style("fill", color);
 
 legend.append("text")
 	.attr("x", 40)
-	.attr("y", function(d, i){ return 600 - (i*lHeight) - lWidth - 4;})
+	.attr("y", function(d, i){ return height - (i*lHeight) - lWidth - 4;})
 	.attr("font-size", "10px")
 	.text(function(d, i){ return partyLegend[i]; });
 
