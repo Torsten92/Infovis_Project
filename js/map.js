@@ -72,7 +72,10 @@ function draw(regions)
 						var region = formatString(temp[i].region, true);
 						var name = formatString(d.properties.name, true);
 						if(region == name) {
-							var rgb = partyColor[formatString(temp[i].parti, true)];
+							
+							console.log(partyColor[ formatString(temp[i].parti, true) ]);
+							
+							var rgb = partyColor[ formatString(temp[i].parti, true) ];
 							var hex = rgbToHex(rgb);
 							
 							if(filterChecked && formatString(partyToFilter, true) == formatString(temp[i].parti, true))
@@ -100,13 +103,16 @@ function draw(regions)
 			});
 };
 
+function setTooltipText() {
+	
+}
+
 function drawFiltered(d, i) {
 
 	var regionPercent;
 	
-	//replace åäö in order to compare with election data
 	var geoRegionString = d.properties.name;
-	geoRegionString = replaceSpecialChars( geoRegionString.toLowerCase() );
+	geoRegionString = geoRegionString.toLowerCase();
 	
 	//find corresponding region in filteredPartyPercentList to get right percent
 	for(var k = 0; k < filteredPartyPercentList.length; k++) {
@@ -142,7 +148,7 @@ function drawMajority(d) {
 	var tempMaj = "";
 	
 	//some string formating is done n order to compaare region name
-	var nameReplaced = replaceSpecialChars( d.properties.name ).toLowerCase();
+	var nameReplaced = ( d.properties.name ).toLowerCase();
 	
 	//Seach through majParty  until region names match, use the maj-party to set color
 	for (var i = 0; i < majParty.length; i++) {

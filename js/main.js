@@ -1,17 +1,17 @@
 
-var partyColor = { 	"socialdemokraterna": 	"rgb(255, 0, 0)", 
-					"moderaterna": 			"rgb(0, 0, 255)",
-					"centerpartiet": 		"rgb(150, 0, 0)",
-					"folkpartiet": 			"rgb(0, 0, 150)", 
-					"kristdemokraterna": 	"rgb(150, 150, 255)", 
-					"miljöpartiet": 		"rgb(0, 255, 0)", 
-					"vänsterpartiet": 		"rgb(255, 150, 150)", 
-					"sverigedemokraterna": 	"rgb(150, 150, 0)",
-
-					"vqnsterpartiet": 		"rgb(255, 150, 150)",
-					"miljqpartiet": 		"rgb(0, 255, 0)",
-					"qvriga partier": 		"rgb(0, 255, 0)",
-				};
+var partyColor = { 	
+	"socialdemokraterna": 	"rgb(255, 0, 0)", 
+	"moderaterna": 			"rgb(0, 0, 255)",
+	"centerpartiet": 		"rgb(150, 0, 0)",
+	"folkpartiet": 			"rgb(0, 0, 150)", 
+	"kristdemokraterna": 	"rgb(150, 150, 255)", 
+	"miljöpartiet": 		"rgb(0, 255, 0)", 
+	"vänsterpartiet": 		"rgb(255, 150, 150)", 
+	"sverigedemokraterna": 	"rgb(150, 150, 0)",
+	"vänsterpartiet": 		"rgb(255, 150, 150)",
+	"miljöpartiet": 		"rgb(0, 255, 0)",
+	"övriga partier": 		"rgb(0, 255, 0)",
+};
 
 //Used for displaying text while the "Filter by specific party" is checked
 var filtertextDiv = d3.select("#map").append("div")
@@ -28,24 +28,11 @@ var education = "Data/education.csv";
 var filterChecked = false;
 var partyToFilter = "socialdemokraterna";
 
-
-function replaceSpecialChars (str) {
-	str = str.replace(/�/g, "q"); 
-	str = str.replace(/å/g, "q");  
-	str = str.replace(/ä/g, "q");  
-	str = str.replace(/ö/g, "q"); 
-	str = str.replace(/Å/g, "q"); 
-	str = str.replace(/Ä/g, "q"); 
-	str = str.replace(/Ö/g, "q"); 
-	return str;
-}
-
 function isNumeric(str) {
   return !isNaN(parseFloat(str)) && isFinite(str);
 }
 
-function formatString(str, toLower) {
-	str = replaceSpecialChars(str);
+function formatString(str, toLower) {	
 	if(toLower)
 		str = str.toLowerCase();
 	if(isNumeric(str[0]))
@@ -58,6 +45,7 @@ function componentToHex(c) {
     var hex = c.toString(16);
     return hex.length == 1 ? "0" + hex : hex;
 }
+
 function rgbToHex(str) {
 
 	var colorsOnly = str.substring(str.indexOf('(') + 1, str.lastIndexOf(')')).split(/,\s*/);
