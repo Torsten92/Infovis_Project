@@ -44,8 +44,8 @@
 					<label>
 						<font size="6">
 							Valår:
-						</font>
-						<span id="slider-value"></span>
+    						<span id="slider-value"></span>
+                        </font>
 					</label>
 				</div>
 				
@@ -125,6 +125,8 @@
 		        // Send newValue to the map for visualization
 		        loadData(newValue);
 		    }
+            //addEvent(window, "resize", onResize());
+            window.addEventListener("resize", onResize);
 		</script>
 
     </body>
