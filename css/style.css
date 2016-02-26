@@ -45,7 +45,7 @@ body{
   border-style: solid;
   border-color: #555555;
   width: 80%;
-  height: 200px;
+  min-height: 200px;
   margin-top: 5%;
   padding-top: 5%;
   padding-left: 5%;
