@@ -6,8 +6,13 @@ function searchUpdate(entry) {
 	
 	redrawNoFilter();
 	
-	if(validateEntry(entry)) 
-		redrawWithFilter( filteredRegionName );
+	// if(validateEntry(entry)) 
+		// redrawWithFilter( filteredRegionName );
+	
+	entry = entry.toLowerCase();
+	
+	if( entry != "" )
+		redrawWithFilter(entry, false);
 }
 
 function validateEntry(entry) {
@@ -44,11 +49,24 @@ function redrawNoFilter() {
 	})	
 }
 
-function redrawWithFilter(region) {
+function redrawWithFilter(region, clickUsed) {
 	g.selectAll(".country")
             .style("fill", function(d) {
-				if( (d.properties.name).toLowerCase() != region )
-					return "gray";
+				
+				var thisRegion = d.properties.name;
+				thisRegion = thisRegion.toLowerCase();
+				
+				if(!clickUsed) {
+					//contains comparison
+					if( thisRegion.indexOf(region) == -1 )
+						return "gray";
+				}
+				else {
+					//exact comparison
+					if( (d.properties.name).toLowerCase() != region )
+						return "gray";
+				}
+				
 				return d3.select(this).style;
 			});
 }
