@@ -61,3 +61,11 @@ function onResize() {
         .attr("width", width)
         .attr("height", height);
 };
+
+function showDetails(kommun) {
+	var details = d3.select("#details");
+
+	details.html("<font size='5'>" + kommun.properties.name + "</font> <br>" + 
+		"mer info kommer inom kort..."
+		);
+}

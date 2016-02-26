@@ -1,6 +1,6 @@
 
 var zoom = d3.behavior.zoom()
-.scaleExtent([0.5, 8])
+.scaleExtent([1, 50])
 .on("zoom", move);
 
 var width = document.getElementById("map").clientWidth - 5;
@@ -83,9 +83,11 @@ function draw(regions)
 			})
             .style("stroke", "white")
 
-			//On mouse  click, filter region
+			//On mouse click, filter region
 			.on("click", function(d) {
-				
+
+				showDetails(d);
+
 				if(regionIsFiltered && filteredRegionName == d.properties.name) {
 					regionIsFiltered = false;
 					redrawNoFilter();

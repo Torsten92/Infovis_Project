@@ -4,14 +4,17 @@ body{
 
 	padding-left: 10%;
 	padding-right: 10%;
+  height: 800px;
 }
 
 #menu {
 	width: 50%;
+  height: 100%;
 	float: left;
 }
 
 #menuitem {
+  width: 100%;
 	padding-top: 5%;
 }
 
@@ -25,7 +28,7 @@ body{
 	border-style: solid;
   border-color: #555555;
 	width: 50%;
-  height: 600px;
+  height: 100%;
 	float: right;
 }
 
@@ -45,7 +48,7 @@ body{
   border-style: solid;
   border-color: #555555;
   width: 80%;
-  height: 200px;
+  min-height: 200px;
   margin-top: 5%;
   padding-top: 5%;
   padding-left: 5%;
