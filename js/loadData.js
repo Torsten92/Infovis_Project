@@ -37,7 +37,7 @@ function createMajorityList(data) {
 	
 		var majority = data[k].parti;
 		var votePerc = parseFloat(data[k].procent);
-		var region = formatString(data[k].region);
+		var region = formatString(data[k].region, true);
 	
 		for (var i = k; i < k+11; i++) {
 			
@@ -52,4 +52,63 @@ function createMajorityList(data) {
 		k += 11;
 		listIndex++;
 	}
+}
+
+//create a list with the party name, and in which region it has its highest voting percentage
+function createRegionList(data){
+	
+	var majRegion = [];
+	var numberOfParties = 8;
+	var k = 0;
+	var listIndex = 0;
+
+	for(var i = 0; i < numberOfParties; i++){
+
+		k = i;
+
+		var highest = formatString(data[k].region, false);
+		var votePerc = parseFloat(data[k].procent);
+		var party = data[k].parti;
+		
+		while(k < data.length){
+
+			if(parseFloat(data[k].procent) > votePerc){
+
+				highest = formatString(data[k].region, false);
+				votePerc = data[k].procent;	
+			}
+
+			k += 11;
+		}
+
+		party = data[i].parti;
+		
+		majRegion[listIndex] = {party, highest, votePerc};
+		listIndex++;
+	} 
+	return majRegion;
+}
+
+function getRegion(party){
+
+	var partyList = [];
+	partyList = createRegionList(dataset);
+	for(var i = 0; i < partyList.length; i++)
+	{
+		if(formatString(partyList[i].party, true) == formatString(party, true))
+			return partyList[i].highest;
+	}
+	return "";
+}
+
+function getPercent(party){
+
+	var partyList = [];
+	partyList = createRegionList(dataset);
+	for(var i = 0; i < partyList.length; i++)
+	{
+		if(formatString(partyList[i].party, true) == formatString(party, true))
+			return partyList[i].votePerc;
+	}
+	return "";
 }

@@ -65,8 +65,11 @@ function changeFilterParty() {
 	
 	//redraw map
 	draw(mun);
+
+	var region = getRegion(partyToFilter);
+	var percent = getPercent(partyToFilter);
 	
-	filtertextDiv.html(partyToFilter + " had its highest voting percentage in Norrköping with 666%!");
+	filtertextDiv.html(partyToFilter + " had its highest voting percentage in " + region + " with " + percent + " %");
 }
 
 //fill a list with the filtered parties percentages for each region
