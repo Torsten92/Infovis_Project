@@ -37,6 +37,7 @@
         <script src="js/map.js"></script>
         <script src="js/filterparty.js"></script>
         <script src="js/filterRegion.js"></script>
+        <script src="js/filterPercentage.js"></script>
         
 		<div id="menu">
 		
@@ -50,16 +51,14 @@
 			</div>
 		
 			<div id="menuitem">
-				<div id="left40">
 					<label>
 						<font size="4">
 							Valår:
     						<span id="slider-value"></span>
                         </font>
 					</label>
-				</div>
 				
-				<div id="right60">
+				<div id="subItem">
 					<input id="voteslider" type="range" min="2002" max="2014" value="2006" step="4" onchange="votingtext(this.value)" />
 				</div>
 			</div>
@@ -85,17 +84,37 @@
 					<label>
 						Enstaka parti
 					</label>
-					<select id="dropmenu" disabled="true" onchange="changeFilterParty()">
-							<option value="Socialdemokraterna">Socialdemokraterna</option>
-							<option value="Moderaterna">Moderaterna</option>
-							<option value="Vänsterpartiet">Vänsterpartiet</option>
-							<option value="Kristdemokraterna">Kristdemokraterna</option>
-							<option value="Miljöpartiet">Miljöpartiet</option>
-							<option value="Centerpartiet">Centerpartiet</option>
-							<option value="Sverigedemokraterna">Sverigedemokraterna</option>
-							<option value="Folkpartiet">Folkpartiet</option>
-						</select>	
 				</div>
+				
+				<div id="subItem">
+					<select id="dropmenu" disabled="true" onchange="changeFilterParty()">
+						<option value="Socialdemokraterna">Socialdemokraterna</option>
+						<option value="Moderaterna">Moderaterna</option>
+						<option value="Vänsterpartiet">Vänsterpartiet</option>
+						<option value="Kristdemokraterna">Kristdemokraterna</option>
+						<option value="Miljöpartiet">Miljöpartiet</option>
+						<option value="Centerpartiet">Centerpartiet</option>
+						<option value="Sverigedemokraterna">Sverigedemokraterna</option>
+						<option value="Folkpartiet">Folkpartiet</option>
+					</select>	
+				</div>
+			
+			</div>
+			
+			<div id="menuitem">
+			
+				<input type="checkbox" checked="false" id="filterCheckbox" onchange="filterPercentCheckChange(this)"/>
+				<label>
+					<font size="4">
+						Filtrera valsiffror
+					</font>
+				</label>
+					
+				<div id="subItem">
+					<input id="percentSlider" type="range" min="0" max="100" value="2006" step="1" onchange="filterPercentSliderChange(this)"/>
+					<label> 100% </label>
+				</div>
+			
 			</div>
 
             <div id="details">
