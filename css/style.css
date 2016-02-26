@@ -47,7 +47,9 @@ body{
   padding-top: 5%;
   padding-left: 5%;
 }
-
+#searchField {
+width: 75%;
+}
 
 /* Styling of sliders. Only works for Firefox */
 input[type=range] {
