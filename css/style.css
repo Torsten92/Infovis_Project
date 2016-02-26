@@ -18,7 +18,7 @@ body{
 }
 #map {
 	border-style: solid;
-    border-color: #555555;
+  border-color: #555555;
 	width: 50%;
   height: 600px;
 	float: right;
@@ -36,6 +36,16 @@ body{
 
 #subItem {
 	padding-left: 10px;
+}
+
+#details {
+  border-style: solid;
+  border-color: #555555;
+  width: 80%;
+  height: 200px;
+  margin-top: 5%;
+  padding-top: 5%;
+  padding-left: 5%;
 }
 
 
