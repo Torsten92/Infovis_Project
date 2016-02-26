@@ -44,9 +44,10 @@ function isNumeric(str) {
   return !isNaN(parseFloat(str)) && isFinite(str);
 }
 
-function formatString(str) {
+function formatString(str, toLower) {
 	str = replaceSpecialChars(str);
-	str = str.toLowerCase();
+	if(toLower)
+		str = str.toLowerCase();
 	if(isNumeric(str[0]))
 		str = str.substring(5, str.length);
 	return str;

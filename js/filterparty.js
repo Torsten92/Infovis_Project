@@ -51,7 +51,7 @@ function filterByParty( checkbox ) {
 
 //called when drop down menu is changed
 function changeFilterParty() {
-	console.log("changefilterparty");
+	//console.log("changefilterparty");
 	var e = document.getElementById("dropmenu");
 	partyToFilter = e.options[e.selectedIndex].text.toString().toLowerCase();
 	
@@ -66,8 +66,11 @@ function changeFilterParty() {
 	
 	//redraw map
 	draw(mun);
+
+	var region = getRegion(partyToFilter);
+	var percent = getPercent(partyToFilter);
 	
-	filtertextDiv.html(partyToFilter + " had its highest voting percentage in Norrköping with 666%!");
+	filtertextDiv.html(partyToFilter + " had its highest voting percentage in " + region + " with " + percent + " %");
 }
 
 //fill a list with the filtered parties percentages for each region

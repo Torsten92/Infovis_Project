@@ -69,15 +69,15 @@ function draw(regions)
 			        temp.sort(compare);
 
 			        for(var i = 0; i < temp.length; i++) {
-						var region = formatString(temp[i].region);
-						var name = formatString(d.properties.name);
+						var region = formatString(temp[i].region, true);
+						var name = formatString(d.properties.name, true);
 						if(region == name) {
-							var rgb = partyColor[formatString(temp[i].parti)];
+							var rgb = partyColor[formatString(temp[i].parti, true)];
 							var hex = rgbToHex(rgb);
 							
-							if(filterChecked && formatString(partyToFilter) == formatString(temp[i].parti))
+							if(filterChecked && formatString(partyToFilter, true) == formatString(temp[i].parti, true))
 								tooltip += "<br><font color=" + hex + "> " + temp[i].parti +  " : " + temp[i].procent + "%</font>";
-							else if(filterChecked && formatString(partyToFilter) != formatString(temp[i].parti))
+							else if(filterChecked && formatString(partyToFilter, true) != formatString(temp[i].parti,true))
 								tooltip += "<br>" + temp[i].parti +  " : " + temp[i].procent + "%";
 							else
 								tooltip += "<br><font color=" + hex + "> " + temp[i].parti +  " : " + temp[i].procent + "%</font>";
