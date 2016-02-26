@@ -55,9 +55,15 @@ function draw(regions)
 			})
             .style("stroke", "white")
 
-			//On mouse  click, filter region
+			//On mouse click, filter region
 			.on("click", function(d) {
 				
+				var details = d3.select("#details");
+
+				details.html("<font size='5'>" + d.properties.name + "</font> <br>" + 
+					"mer info kommer inom kort..."
+					);
+
 				if(regionIsFiltered && filteredRegionName == d.properties.name) {
 					regionIsFiltered = false;
 					redrawNoFilter();
