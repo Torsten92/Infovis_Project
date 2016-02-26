@@ -13,10 +13,6 @@ var partyColor = {
 	"övriga partier": 		"rgb(0, 255, 0)",
 };
 
-//Used for displaying text while the "Filter by specific party" is checked
-var filtertextDiv = d3.select("#map").append("div")
-		.attr("class", "filteredPartyText")
-		.style("opacity", 0);
 
 //dataset might be different depending on the slider position. It will be initialized on startup in loadData()
 var dataset;
@@ -55,3 +51,11 @@ function rgbToHex(str) {
 
     return "#" + componentToHex(red) + componentToHex(green) + componentToHex(blue);
 }
+
+function onResize() {
+	var width = document.getElementById("map").clientWidth - 5;
+	var height = document.getElementById("map").clientHeight - 5;
+	svg = d3.selectAll(".svg")
+        .attr("width", width)
+        .attr("height", height);
+};

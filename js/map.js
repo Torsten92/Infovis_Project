@@ -3,11 +3,20 @@ var zoom = d3.behavior.zoom()
 .scaleExtent([0.5, 8])
 .on("zoom", move);
 
-//Assings the svg canvas to the map div
+var width = document.getElementById("map").clientWidth - 5;
+var height = document.getElementById("map").clientHeight - 5;
+
+//Assigns the svg canvas to the map div
 var svg = d3.select("#map").append("svg")
-        .attr("width", 400)
-        .attr("height", 600)
+		.attr("class", "svg")
+        .attr("width", width)
+        .attr("height", height)
         .call(zoom);
+
+//Used for displaying text while the "Filter by specific party" is checked
+var filtertextDiv = d3.select("#map").append("div")
+		.attr("class", "filteredPartyText")
+		.style("opacity", 0);
 
 var g = svg.append("g");
 
@@ -72,7 +81,7 @@ function draw(regions)
 						var region = formatString(temp[i].region, true);
 						var name = formatString(d.properties.name, true);
 						if(region == name) {
-							
+
 							var rgb = partyColor[ formatString(temp[i].parti, true) ];
 							var hex = rgbToHex(rgb);
 							
