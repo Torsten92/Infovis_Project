@@ -29,9 +29,14 @@ function showMajority( checkbox ) {
 		.style("opacity", 0);
 	
 	//redraw map
-	draw(mun);
+	if(filterByPercent){
+		draw(mun);
+		redrawWithPercentFilter();
+	}
+	else 
+		draw(mun);
 }
-						
+
 //called when filter checkbox is changed
 function filterByParty( checkbox ) {
 	
@@ -67,8 +72,12 @@ function filterByParty( checkbox ) {
 	filtertextDiv.html(partyToFilter + " hade högst valprocent i " +  getRegion(partyToFilter) + " med " + getPercent(partyToFilter) + " %");
 	
 	//redraw map
-	draw(mun);
-	
+	if(filterByPercent) {
+		draw(mun);
+		redrawWithPercentFilter();
+	}
+	else
+		draw(mun);	
 }
 
 //called when drop down menu is changed
