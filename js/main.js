@@ -1,16 +1,16 @@
 
 var partyColor = { 	
-	"socialdemokraterna": 	"rgb(255, 0, 0)", 
-	"moderaterna": 			"rgb(0, 0, 255)",
-	"centerpartiet": 		"rgb(150, 0, 0)",
-	"folkpartiet": 			"rgb(0, 0, 150)", 
-	"kristdemokraterna": 	"rgb(150, 150, 255)", 
+	"socialdemokraterna": 	"rgb(224, 0, 36)", 
+	"moderaterna": 			"rgb(0, 139, 206)",
+	"centerpartiet": 		"rgb(5, 155, 65)",
+	"folkpartiet": 			"rgb(137, 192, 233)", 
+	"kristdemokraterna": 	"rgb(34, 86, 169)", 
 	"miljöpartiet": 		"rgb(0, 255, 0)", 
-	"vänsterpartiet": 		"rgb(255, 150, 150)", 
-	"sverigedemokraterna": 	"rgb(150, 150, 0)",
+	"vänsterpartiet": 		"rgb(189, 0, 28)", 
+	"sverigedemokraterna": 	"rgb(234, 224, 13)",
 	"vänsterpartiet": 		"rgb(255, 150, 150)",
-	"miljöpartiet": 		"rgb(0, 255, 0)",
-	"övriga partier": 		"rgb(0, 255, 0)",
+	"miljöpartiet": 		"rgb(0, 132, 59)",
+	"övriga partier": 		"rgb(100, 100, 100)",
 };
 
 //dataset might be different depending on the slider position. It will be initialized on startup in loadData()
@@ -18,6 +18,9 @@ var dataset;
 
 //Stores the current election year used
 var year;
+
+//Stores the current selected municipality
+var selectedMunicipality;
 
 //Initialize data containing detailed information
 var population = "Data/population.csv";
@@ -31,6 +34,9 @@ d3.csv(education, function(data) { education = data; });
 var filterChecked = false;
 var partyToFilter = "socialdemokraterna";
 var regionIsFiltered = false;
+
+//stores region and it's majority party
+var majParty = [];
 
 //Return true if a string contains only numbers
 function isNumeric(str) {
@@ -91,6 +97,7 @@ function showDetails(kommun) {
 	var detailsBelow = d3.select("#detailsBelow");
 	var width = document.getElementById("details").offsetWidth;
 
+	selectedMunicipality = kommun;
 
 	//Erase old information
 	details.selectAll("#startup").remove();
@@ -105,17 +112,21 @@ function showDetails(kommun) {
 
 	population.forEach(function(d, i) {
 		if(formatString(kommun.properties.name, true) == formatString(d.region, true)) {
-			var temp = splitYears(d.år)
-			
+			var temp = splitYears(d.år);
+
 			switch(year) {
 				case "2002":
 					temp = temp[0];
+					break;
 				case "2006":
 					temp = temp[1];
+					break;
 				case "2010":
 					temp = temp[2];
+					break;
 				case "2014":
-					temp = temp[3];	
+					temp = temp[3];
+					break;
 			}
 
 			popSum += parseFloat(temp);
@@ -127,17 +138,21 @@ function showDetails(kommun) {
 	x = 0;
 	education.forEach(function(d, i) {
 		if(formatString(kommun.properties.name, true) == formatString(d.region, true)) {
-			var temp = splitYears(d.år)
+			var temp = splitYears(d.år);
 			
 			switch(year) {
 				case "2002":
 					temp = temp[0];
+					break;
 				case "2006":
 					temp = temp[1];
+					break;
 				case "2010":
 					temp = temp[2];
+					break;
 				case "2014":
-					temp = temp[3];	
+					temp = temp[3];
+					break;
 			}
 
 			tempEdu[x] = { "utbildningsnivå": d.utbildningsnivå, "år": temp };
@@ -148,17 +163,21 @@ function showDetails(kommun) {
 	x = 0;
 	income.forEach(function(d, i) {
 		if(formatString(kommun.properties.name, true) == formatString(d.region, true)) {
-			var temp = splitYears(d.år)
+			var temp = splitYears(d.år);
 			
 			switch(year) {
 				case "2002":
 					temp = temp[0];
+					break;
 				case "2006":
 					temp = temp[1];
+					break;
 				case "2010":
 					temp = temp[2];
+					break;
 				case "2014":
-					temp = temp[3];	
+					temp = temp[3];
+					break;	
 			}
 
 			tempInc[x] = { "ålder": d.ålder, "år": temp };

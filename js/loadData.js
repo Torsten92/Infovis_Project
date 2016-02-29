@@ -10,6 +10,9 @@ function loadData(value) {
 		dataset = data;
         createMajorityList(data);
         dataset = data;
+
+        if(selectedMunicipality)
+			showDetails(selectedMunicipality);
     });
     
 	//Load the topojson data with "svenska kommuner"
@@ -22,10 +25,9 @@ function loadData(value) {
 		else
 			draw(mun);
 	});
-}
 
-//stores region and it's majority party
-var majParty = [];
+	
+}
 
 //Build a list  with the region name, and which party has majority there, plus the percentage
 function createMajorityList(data) {
