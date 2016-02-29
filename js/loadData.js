@@ -23,9 +23,6 @@ function loadData(value) {
 	});
 }
 
-//stores region and it's majority party
-var majParty = [];
-
 //Build a list  with the region name, and which party has majority there, plus the percentage
 function createMajorityList(data) {
 	

@@ -26,6 +26,9 @@ var partyToFilter = "socialdemokraterna";
 
 var regionIsFiltered = false;
 
+//stores region and it's majority party
+var majParty = [];
+
 function isNumeric(str) {
   return !isNaN(parseFloat(str)) && isFinite(str);
 }

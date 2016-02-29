@@ -90,7 +90,11 @@ function draw(regions)
 
 				if(regionIsFiltered && filteredRegionName == d.properties.name) {
 					regionIsFiltered = false;
-					redrawNoFilter();
+					
+					if(filterByPercent)
+						redrawWithPercentFilter();
+					else
+						redrawNoFilter();
 				}
 				else {
 					filteredRegionName = d.properties.name;
