@@ -1,16 +1,16 @@
 
 var partyColor = { 	
-	"socialdemokraterna": 	"rgb(255, 0, 0)", 
-	"moderaterna": 			"rgb(0, 0, 255)",
-	"centerpartiet": 		"rgb(150, 0, 0)",
-	"folkpartiet": 			"rgb(0, 0, 150)", 
-	"kristdemokraterna": 	"rgb(150, 150, 255)", 
+	"socialdemokraterna": 	"rgb(224, 0, 36)", 
+	"moderaterna": 			"rgb(0, 139, 206)",
+	"centerpartiet": 		"rgb(5, 155, 65)",
+	"folkpartiet": 			"rgb(137, 192, 233)", 
+	"kristdemokraterna": 	"rgb(34, 86, 169)", 
 	"miljöpartiet": 		"rgb(0, 255, 0)", 
-	"vänsterpartiet": 		"rgb(255, 150, 150)", 
-	"sverigedemokraterna": 	"rgb(150, 150, 0)",
+	"vänsterpartiet": 		"rgb(189, 0, 28)", 
+	"sverigedemokraterna": 	"rgb(234, 224, 13)",
 	"vänsterpartiet": 		"rgb(255, 150, 150)",
-	"miljöpartiet": 		"rgb(0, 255, 0)",
-	"övriga partier": 		"rgb(0, 255, 0)",
+	"miljöpartiet": 		"rgb(0, 132, 59)",
+	"övriga partier": 		"rgb(100, 100, 100)",
 };
 
 

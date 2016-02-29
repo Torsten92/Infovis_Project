@@ -188,10 +188,10 @@ function drawFiltered(d, i) {
     var green = Math.floor( colorsOnly[1] * regionPercent );
 	var blue 	= Math.floor( colorsOnly[2] * regionPercent );
 	
-	//Normalize the color values
-	red		= Math.floor( (red / maxRed) * 255);
-	green 	= Math.floor( (green / maxGreen) * 255);
-	blue 	= Math.floor( (blue / maxBlue) * 255);
+	//normalize the color channels
+	red		= Math.floor( (red / maxRed) * colorsOnly[0]);
+	green 	= Math.floor( (green / maxGreen) * colorsOnly[1]);
+	blue 	= Math.floor( (blue / maxBlue) * colorsOnly[2]);
 	
 	//reconvert the color to a rgb string
 	var resColor = "rgb(" + red + "," + green + "," + blue + ")";
