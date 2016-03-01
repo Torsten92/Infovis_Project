@@ -23,9 +23,9 @@ var year;
 var selectedMunicipality;
 
 //Initialize data containing detailed information
-var population = "Data/population.csv";
-var income = "Data/income.csv";
-var education = "Data/education.csv";
+var population = "data/population.csv";
+var income = "data/income.csv";
+var education = "data/education.csv";
 d3.csv(population, function(data) { population = data; });
 d3.csv(income, function(data) { income = data; });
 d3.csv(education, function(data) { education = data; });
