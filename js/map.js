@@ -8,7 +8,7 @@ var height = document.getElementById("map").clientHeight - 5;
 
 //Assigns the svg canvas to the map div
 var svg = d3.select("#map").append("svg")
-		.attr("class", "svg")
+		.attr("class", "map")
         .attr("width", width)
         .attr("height", height)
         .call(zoom);

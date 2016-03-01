@@ -77,33 +77,37 @@ function splitYears(str) {
 function onResize() {
 	var width = document.getElementById("map").clientWidth - 5;
 	var height = document.getElementById("map").clientHeight - 5;
-	svg = d3.selectAll(".svg")
+	svg = d3.selectAll(".map")
         .attr("width", width)
         .attr("height", height);
-
-        var details = d3.select("#details");
-        details.style("height", function() {
+	/*
+	var width = document.getElementById("donut").offsetWidth;
+    var height = document.getElementById("info").offsetHeight;	//Base donut window height on info height
+	d3.select("#donut").selectAll(".donut").attr("transform", "translate(" + (width/2) + ", " + 100 + ")");
+	
+    var details = d3.select("#details");
+    details.style("height", function() {
 		if(document.getElementById("details").offsetWidth > 530) return "420px";
 		else return "600px";
 	})
-	.attr("transform", "translate(" + width + ", 100)");
+	.attr("transform", "translate(" + width + ", 100)");*/
 };
 
 //Contains functionality for the detailed information box
 function showDetails(kommun) {
 	var details = d3.select("#details");
-	var detailsInfo = d3.select("#detailsInfo");
-	var detailsDonut = d3.select("#detailsDonut");
-	var detailsBelow = d3.select("#detailsBelow");
-	var width = document.getElementById("details").offsetWidth;
+	var detailsInfo = d3.select("#info");
+	var detailsDonut = d3.select("#donut");
+	var detailsPop = d3.select("#pop").style("height", "150px");
+	var detailsEdu = d3.select("#edu").style("height", "150px");
+	var detailsInc = d3.select("#inc").style("height", "150px");
 
 	selectedMunicipality = kommun;
 
 	//Erase old information
 	details.selectAll("#startup").remove();
-	detailsInfo.selectAll(".info").remove();
-	detailsDonut.selectAll(".donut").remove();
-	detailsBelow.selectAll(".info").remove();
+	details.selectAll(".col-md-6").html("");
+	details.selectAll(".col-md-4").html("");
 
 	var tempProcent = [], tempParti = [], tempPop = [], tempEdu = [], tempInc = [];
 	var popSum = 0;
@@ -194,18 +198,10 @@ function showDetails(kommun) {
         }
 	});
 
-    detailsInfo.append("div")	
-		.attr("class", "info")
-		.style("float", "left")
-		.style("opacity", 1.0)
-		.html( printParties(kommun) );
+    detailsInfo.html( printParties(kommun) );
 
     createDonut(tempParti, tempProcent);
-	
-	details.style("height", function() {
-		if(width > 530) return "300px";
-		else return "400px";
-	});
+
 
 	var popStr = "<font size='3'>Population:</font><br>";
 	for(var i = 0; i < tempPop.length; i++) {
@@ -225,24 +221,9 @@ function showDetails(kommun) {
 
     //var detailsBelowDiv = detailsBelow.append("div").style("border-style", "solid");
 
-    detailsBelow.append("div")
-		.attr("class", "info")
-		.style("float", "left")
-		.style("width", "30%")
-		.style("opacity", 1.0)
-		.html( popStr);
-	detailsBelow.append("div")	
-		.attr("class", "info")
-		.style("float", "left")
-		.style("width", "30%")
-		.style("opacity", 1.0)
-		.html( eduStr);
-	detailsBelow.append("div")	
-		.attr("class", "info")
-		.style("float", "left")
-		.style("width", "30%")
-		.style("opacity", 1.0)
-		.html( incStr);
+    detailsPop.html( popStr);
+	detailsEdu.html( eduStr);
+	detailsInc.html( incStr);
 }
 
 //Prints a list of the parties for a municipality. Currently used by tooltip and the detailed information box.

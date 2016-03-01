@@ -25,8 +25,6 @@ function loadData(value) {
 		else
 			draw(mun);
 	});
-
-	
 }
 
 //Build a list  with the region name, and which party has majority there, plus the percentage
