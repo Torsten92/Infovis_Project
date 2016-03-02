@@ -1,6 +1,5 @@
 body{
 	padding-top: 5%; 
-	/* padding-bottom: 2%; */
 	padding-left: 5%;
 	padding-right: 5%;
 	
@@ -12,6 +11,7 @@ body{
 	height: 100%;
 	width: 100%;
 	max-width:1000px;
+	min-width: 600px;
 }
 
 #menu {
