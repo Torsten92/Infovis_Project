@@ -8,7 +8,7 @@ var height = document.getElementById("map").clientHeight - 5;
 
 //Assigns the svg canvas to the map div
 var svg = d3.select("#map").append("svg")
-		.attr("class", "svg")
+		.attr("class", "map")
         .attr("width", width)
         .attr("height", height)
         .call(zoom);
@@ -63,7 +63,11 @@ function draw(regions)
 
 				if(regionIsFiltered && filteredRegionName == d.properties.name) {
 					regionIsFiltered = false;
-					redrawNoFilter();
+					
+					if(filterByPercent)
+						redrawWithPercentFilter();
+					else
+						redrawNoFilter();
 				}
 				else {
 					filteredRegionName = d.properties.name;
@@ -78,42 +82,7 @@ function draw(regions)
 				tooltipDiv.transition()	
 					.duration(200)
 					.style("opacity", 0.9);
-				tooltipDiv.html( function() {
-					var tooltip = "<font size='4'> " + d.properties.name + "</font>";
-					
-					var temp = [];
-					var x = 0;			        
-			        dataset.forEach(function(d2, i) {
-			        	if(isNumeric(d2.procent)) {
-				        	temp[x++] = {"region": d2.region, "parti": d2.parti, "procent": d2.procent};
-				        }
-					});
-					
-			        //Sort array by party precentage
-			        function compare(a, b) {
-			        	return parseFloat(b.procent) - parseFloat(a.procent);
-			        }
-			        temp.sort(compare);
-
-			        for(var i = 0; i < temp.length; i++) {
-						var region = formatString(temp[i].region, true);
-						var name = formatString(d.properties.name, true);
-						if(region == name) {
-
-							var rgb = partyColor[ formatString(temp[i].parti, true) ];
-							var hex = rgbToHex(rgb);
-							
-							if(filterChecked && formatString(partyToFilter, true) == formatString(temp[i].parti, true))
-								tooltip += "<br><font color=" + hex + "> " + temp[i].parti +  " : " + temp[i].procent + "%</font>";
-							else if(filterChecked && formatString(partyToFilter, true) != formatString(temp[i].parti,true))
-								tooltip += "<br>" + temp[i].parti +  " : " + temp[i].procent + "%";
-							else
-								tooltip += "<br><font color=" + hex + "> " + temp[i].parti +  " : " + temp[i].procent + "%</font>";
-						}
-					}
-					
-					return tooltip;
-				})
+				tooltipDiv.html( printParties(d, filterChecked) )
 				.style("left", (d3.event.pageX + 50) + "px")		
                 .style("top", (d3.event.pageY - 100) + "px")
             })
@@ -159,10 +128,10 @@ function drawFiltered(d, i) {
     var green = Math.floor( colorsOnly[1] * regionPercent );
 	var blue 	= Math.floor( colorsOnly[2] * regionPercent );
 	
-	//Normalize the color values
-	red		= Math.floor( (red / maxRed) * 255);
-	green 	= Math.floor( (green / maxGreen) * 255);
-	blue 	= Math.floor( (blue / maxBlue) * 255);
+	//normalize the color channels
+	red		= Math.floor( (red / maxRed) * colorsOnly[0]);
+	green 	= Math.floor( (green / maxGreen) * colorsOnly[1]);
+	blue 	= Math.floor( (blue / maxBlue) * colorsOnly[2]);
 	
 	//reconvert the color to a rgb string
 	var resColor = "rgb(" + red + "," + green + "," + blue + ")";

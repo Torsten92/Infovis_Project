@@ -4,11 +4,15 @@ var mun;
 //Load data
 function loadData(value) {
     dataset = "data/Swedish_Election_" + value + ".csv";
-	
+	year = value;
+
     d3.csv(dataset, function(data) {
 		dataset = data;
         createMajorityList(data);
         dataset = data;
+
+        if(selectedMunicipality)
+			showDetails(selectedMunicipality);
     });
     
 	//Load the topojson data with "svenska kommuner"
@@ -22,9 +26,6 @@ function loadData(value) {
 			draw(mun);
 	});
 }
-
-//stores region and it's majority party
-var majParty = [];
 
 //Build a list  with the region name, and which party has majority there, plus the percentage
 function createMajorityList(data) {

@@ -38,6 +38,7 @@
         <script src="js/filterparty.js"></script>
         <script src="js/filterRegion.js"></script>
         <script src="js/filterPercentage.js"></script>
+        <script src="js/donut.js"></script>
         
 		<div id="menu">
 		
@@ -59,7 +60,7 @@
 					</label>
 				
 				<div id="subItem">
-					<input id="voteslider" type="range" min="2002" max="2014" value="2006" step="4" onchange="votingtext(this.value)" />
+					<input id="voteslider" type="range" min="2002" max="2014" value="2014" step="4" onchange="votingtext(this.value)" />
 				</div>
 			</div>
 			
@@ -103,7 +104,7 @@
 			
 			<div id="menuitem">
 			
-				<input type="checkbox" checked="false" id="filterCheckbox" onchange="filterPercentCheckChange(this)"/>
+				<input type="checkbox" id="filterCheckbox" onchange="filterPercentCheckChange(this)"/>
 				<label>
 					<font size="4">
 						Filtrera valsiffror
@@ -111,14 +112,29 @@
 				</label>
 					
 				<div id="subItem">
-					<input id="percentSlider" type="range" min="0" max="100" value="2006" step="1" onchange="filterPercentSliderChange(this)"/>
-					<label> 100% </label>
+					<input id="percentSlider" type="range" min="0" max="100" value="100" step="1" onInput="updatePercentFilterText(this)" onchange="filterPercentSliderChange(this)"/>
+					<label id="filterPercentText"> 100% </label>
 				</div>
 			
 			</div>
-
+<!--
             <div id="details">
-                hej
+                <div id="startup">Select a municipality to show detailed information abut it.</div>
+                <div id="detailsInfo"></div>
+                <div id="detailsDonut"></div>
+                <div id="detailsBelow"></div>
+            </div>-->
+            <div id="details">
+            	<div id="startup">Select a municipality to show detailed information about it.</div>
+		        <div class="container">
+		        	<div class="row">
+		        		<div class="col-md-6" id="info"></div>
+		        		<div class="col-md-6" id="donut" height="200px"></div>
+		        		<div class="col-md-4" id="pop"></div>
+		        		<div class="col-md-4" id="edu"></div>
+		        		<div class="col-md-4" id="inc"></div>
+		        	</div>
+		        </div>
             </div>
 
 		</div>
