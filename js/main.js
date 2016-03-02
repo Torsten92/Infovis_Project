@@ -80,17 +80,10 @@ function onResize() {
 	svg = d3.selectAll(".map")
         .attr("width", width)
         .attr("height", height);
-	/*
-	var width = document.getElementById("donut").offsetWidth;
-    var height = document.getElementById("info").offsetHeight;	//Base donut window height on info height
-	d3.select("#donut").selectAll(".donut").attr("transform", "translate(" + (width/2) + ", " + 100 + ")");
 	
-    var details = d3.select("#details");
-    details.style("height", function() {
-		if(document.getElementById("details").offsetWidth > 530) return "420px";
-		else return "600px";
-	})
-	.attr("transform", "translate(" + width + ", 100)");*/
+	d3.selectAll("#detailDonutContent").html("");
+	
+	createDonut( selectedMunicipality );
 };
 
 //Contains functionality for the detailed information box
@@ -98,22 +91,28 @@ function showDetails(kommun) {
 	var details = d3.select("#details");
 	var detailsInfo = d3.select("#info");
 	var detailsDonut = d3.select("#donut");
-	var detailsPop = d3.select("#pop").style("height", "150px");
-	var detailsEdu = d3.select("#edu").style("height", "150px");
-	var detailsInc = d3.select("#inc").style("height", "150px");
+	
+	//Holds info text in detail box
+	var detailsPop = d3.select("#populationText");	
+	var detailsEdu = d3.select("#educationText");	
+	var detailsInc = d3.select("#incomeText");
 
+	//Set title
+	d3.select("#detailTextTitle").html(kommun.properties.name);
+	
 	selectedMunicipality = kommun;
 
 	//Erase old information
 	details.selectAll("#startup").remove();
-	details.selectAll(".col-md-6").html("");
-	details.selectAll(".col-md-4").html("");
+	details.selectAll("#detailDonutContent").html("");
+	
+	//details.selectAll(".col-md-4").html("");
 
-	var tempProcent = [], tempParti = [], tempPop = [], tempEdu = [], tempInc = [];
+	var tempPop = [], tempEdu = [], tempInc = [];
 	var popSum = 0;
 	
+	//load data depending on the election year selected
 	var x = 0;
-
 	population.forEach(function(d, i) {
 		if(formatString(kommun.properties.name, true) == formatString(d.region, true)) {
 			var temp = splitYears(d.år);
@@ -139,6 +138,7 @@ function showDetails(kommun) {
 		}
 	});
 
+	//load data depending on the election year selected
 	x = 0;
 	education.forEach(function(d, i) {
 		if(formatString(kommun.properties.name, true) == formatString(d.region, true)) {
@@ -164,7 +164,8 @@ function showDetails(kommun) {
 		}
 	});
 
-	x = 0;
+	//load data depending on the election year selected
+	x = 0;	
 	income.forEach(function(d, i) {
 		if(formatString(kommun.properties.name, true) == formatString(d.region, true)) {
 			var temp = splitYears(d.år);
@@ -189,31 +190,22 @@ function showDetails(kommun) {
 		}
 	});
 
-	x = 0;
-    dataset.forEach(function(d, i) {
-    	if(formatString(kommun.properties.name, true) == formatString(d.region, true) && isNumeric(d.procent)) {
-    		tempParti[x] = d.parti;
-        	tempProcent[x] = d.procent;
-        	x++;
-        }
-	});
+
 
     detailsInfo.html( printParties(kommun) );
 
-    createDonut(tempParti, tempProcent);
+	//Draw the donut chart
+    createDonut(kommun);
 
+	// Set population text
+	var popStr = "Population: " + popSum;
 
-	var popStr = "<font size='3'>Population:</font><br>";
-	for(var i = 0; i < tempPop.length; i++) {
-		popStr += tempPop[i].ålder + ": " + tempPop[i].år + "<br>";
-	}
-	popStr += "Sammanlagt: " + popSum
+	// Set education text
+	var eduStr = "Eftergymnasial utbildning: " + tempEdu[0].år;
 
-	var eduStr = "<font size='3'>Utbildningsnivå:</font><br>";
-	for(var i = 0; i < tempEdu.length; i++) {
-		eduStr += tempEdu[i].utbildningsnivå + ": " + tempEdu[i].år + "<br>";
-	}
-
+	
+	var incStr = "Inkomst: " + tempInc[0].år;
+	
 	var incStr = "<font size='3'>Inkomst:</font><br>";
 	for(var i = 0; i < tempInc.length; i++) {
 		incStr += tempInc[i].ålder + ": " + tempInc[i].år + "<br>";

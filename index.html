@@ -21,122 +21,130 @@
     <body>
         <link rel="stylesheet" type="text/css" href="css/style.css">
 
-        <div id="map"></div>
+		<div id="topContainer">
 
-        <script src="js/vendor/jquery.min.js"></script>
-        <script src="js/vendor/bootstrap.min.js"></script>
-        <script src="js/plugins.js"></script>
-        <script src="js/vendor/d3.v3.min.js"></script>
-        <script src="js/vendor/modernizr-2.6.2.min.js"></script>
-        <script src="js/vendor/topojson.v1.min.js"></script>
-        <script src="js/vendor/underscore-min.js"></script>
-        <script src="js/vendor/colorbrewer.js"></script>
+			<div id="map"></div>
 
-        <script src="js/main.js"></script>
-        <script src="js/loadData.js"></script>
-        <script src="js/map.js"></script>
-        <script src="js/filterparty.js"></script>
-        <script src="js/filterRegion.js"></script>
-        <script src="js/filterPercentage.js"></script>
-        <script src="js/donut.js"></script>
-        
-		<div id="menu">
-		
-			<div id="menuitem">
-				<label>
-					<font size="4">
-						Sök kommun
-					</font>
-				</label>
-				<input id="searchField" type="text" onKeyUp="searchUpdate(this.value)" onClick="this.select();">
-			</div>
-		
-			<div id="menuitem">
-					<label>
-						<font size="4">
-							Valår:
-    						<span id="slider-value"></span>
-                        </font>
-					</label>
-				
-				<div id="subItem">
-					<input id="voteslider" type="range" min="2002" max="2014" value="2014" step="4" onchange="votingtext(this.value)" />
-				</div>
-			</div>
+			<script src="js/vendor/jquery.min.js"></script>
+			<script src="js/vendor/bootstrap.min.js"></script>
+			<script src="js/plugins.js"></script>
+			<script src="js/vendor/d3.v3.min.js"></script>
+			<script src="js/vendor/modernizr-2.6.2.min.js"></script>
+			<script src="js/vendor/topojson.v1.min.js"></script>
+			<script src="js/vendor/underscore-min.js"></script>
+			<script src="js/vendor/colorbrewer.js"></script>
+
+			<script src="js/main.js"></script>
+			<script src="js/loadData.js"></script>
+			<script src="js/map.js"></script>
+			<script src="js/filterparty.js"></script>
+			<script src="js/filterRegion.js"></script>
+			<script src="js/filterPercentage.js"></script>
+			<script src="js/donut.js"></script>
 			
-			<div id="menuitem">
-				<div>
-					<label>
-						<font size="4">
-							Välj vy:
-						</font>
-					</label>
-				</div>
-				
-				<div id="subItem">
-					<input type="radio" checked="true" value="None" id="checkboxMaj" name="checkMaj" onchange="showMajority(this)"/>
-					<label>
-						Majoritet per kommun
-					</label>
-				</div>
-				
-				<div id="subItem">
-					<input type="radio" checked="false" value="None" id="checkbox1" name="check1" onchange="filterByParty(this)"/>
-					<label>
-						Enstaka parti
-					</label>
-				</div>
-				
-				<div id="subItem">
-					<select id="dropmenu" disabled="true" onchange="changeFilterParty()">
-						<option value="Socialdemokraterna">Socialdemokraterna</option>
-						<option value="Moderaterna">Moderaterna</option>
-						<option value="Vänsterpartiet">Vänsterpartiet</option>
-						<option value="Kristdemokraterna">Kristdemokraterna</option>
-						<option value="Miljöpartiet">Miljöpartiet</option>
-						<option value="Centerpartiet">Centerpartiet</option>
-						<option value="Sverigedemokraterna">Sverigedemokraterna</option>
-						<option value="Folkpartiet">Folkpartiet</option>
-					</select>	
-				</div>
 			
-			</div>
+			<div id="menu">
 			
-			<div id="menuitem">
+				<div id="menuPanel">
 			
-				<input type="checkbox" id="filterCheckbox" onchange="filterPercentCheckChange(this)"/>
-				<label>
-					<font size="4">
-						Filtrera valsiffror
-					</font>
-				</label>
+					<div id="menuitem">
+						<label>
+							<font size="4">
+								Sök kommun
+							</font>
+						</label>
+						<input id="searchField" type="text" onKeyUp="searchUpdate(this.value)" onClick="this.select();">
+					</div>
+				
+					<div id="menuitem">
+							<label>
+								<font size="4">
+									Valår:
+									<span id="slider-value"></span>
+								</font>
+							</label>
+						
+						<div id="subItem">
+							<input id="voteslider" type="range" min="2002" max="2014" value="2014" step="4" onchange="votingtext(this.value)" />
+						</div>
+					</div>
 					
-				<div id="subItem">
-					<input id="percentSlider" type="range" min="0" max="100" value="100" step="1" onInput="updatePercentFilterText(this)" onchange="filterPercentSliderChange(this)"/>
-					<label id="filterPercentText"> 100% </label>
+					<div id="menuitem">
+						<div>
+							<label>
+								<font size="4">
+									Välj vy:
+								</font>
+							</label>
+						</div>
+						
+						<div id="subItem">
+							<input type="radio" checked="true" value="None" id="checkboxMaj" name="checkMaj" onchange="showMajority(this)"/>
+							<label>
+								Majoritet per kommun
+							</label>
+						</div>
+						
+						<div id="subItem">
+							<input type="radio" checked="false" value="None" id="checkbox1" name="check1" onchange="filterByParty(this)"/>
+							<label>
+								Enstaka parti
+							</label>
+						</div>
+						
+						<div id="subItem">
+							<select id="dropmenu" disabled="true" onchange="changeFilterParty()">
+								<option value="Socialdemokraterna">Socialdemokraterna</option>
+								<option value="Moderaterna">Moderaterna</option>
+								<option value="Vänsterpartiet">Vänsterpartiet</option>
+								<option value="Kristdemokraterna">Kristdemokraterna</option>
+								<option value="Miljöpartiet">Miljöpartiet</option>
+								<option value="Centerpartiet">Centerpartiet</option>
+								<option value="Sverigedemokraterna">Sverigedemokraterna</option>
+								<option value="Folkpartiet">Folkpartiet</option>
+							</select>	
+						</div>
+					
+					</div>
+					
+					<div id="menuitem">
+					
+						<input type="checkbox" id="filterCheckbox" onchange="filterPercentCheckChange(this)"/>
+						<label>
+							<font size="4">
+								Filtrera valsiffror
+							</font>
+						</label>
+							
+						<div id="subItem">
+							<input id="percentSlider" type="range" min="0" max="100" value="100" step="1" onInput="updatePercentFilterText(this)" onchange="filterPercentSliderChange(this)"/>
+							<label id="filterPercentText"> 100% </label>
+						</div>
+					
+					</div>	
 				</div>
-			
+				
+				<div id="details">
+				
+					<!-- This only shows when no region is selected -->
+					<!-- <div id="startup">Select a municipality to show detailed information about it.</div> -->
+					
+					<div id="detailTextTitle">
+						<label id="detailsTitle">
+							<font size="5">
+								Kommun
+							</font>
+						</label>
+					</div>
+					<div id="detailTextContent">
+						<div id="populationText" class="detailTextField">Population:</div>
+						<div id="educationText" class="detailTextField">Utbildning</div>
+						<div id="incomeText" class="detailTextField">Inkomst</div>
+					</div>
+					<div id="detailDonutContent"></div>
+					
+				</div>
 			</div>
-<!--
-            <div id="details">
-                <div id="startup">Select a municipality to show detailed information abut it.</div>
-                <div id="detailsInfo"></div>
-                <div id="detailsDonut"></div>
-                <div id="detailsBelow"></div>
-            </div>-->
-            <div id="details">
-            	<div id="startup">Select a municipality to show detailed information about it.</div>
-		        <div class="container">
-		        	<div class="row">
-		        		<div class="col-md-6" id="info"></div>
-		        		<div class="col-md-6" id="donut" height="200px"></div>
-		        		<div class="col-md-4" id="pop"></div>
-		        		<div class="col-md-4" id="edu"></div>
-		        		<div class="col-md-4" id="inc"></div>
-		        	</div>
-		        </div>
-            </div>
-
 		</div>
 	
         <script>

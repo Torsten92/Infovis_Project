@@ -1,6 +1,14 @@
 
-function createDonut(dataParty, dataPercent) {
-
+function createDonut(kommun) {
+	var dataPercent = [], dataParty = [];
+	var x = 0;
+    dataset.forEach(function(d, i) {
+    	if(formatString(kommun.properties.name, true) == formatString(d.region, true) && isNumeric(d.procent)) {
+    		dataParty[x] = d.parti;
+			dataPercent[x] = d.procent;
+        	x++;
+        }
+	});
     
     var pie = d3.layout.pie()
         .sort(function(a, b) { return b - a; });
@@ -9,9 +17,9 @@ function createDonut(dataParty, dataPercent) {
         .innerRadius(0)
         .outerRadius(50);
 
-    var svg = d3.select("#donut");
-    var width = document.getElementById("donut").offsetWidth;
-    var height = document.getElementById("info").offsetHeight;	//Base donut window height on info height
+    var svg = d3.select("#detailDonutContent");
+    var width = document.getElementById("detailDonutContent").offsetWidth;
+    // var height = document.getElementById("info").offsetHeight;	//Base donut window height on info height
     
     //+10 pixels for margin
     svg.style("height", height+10 + "px");
