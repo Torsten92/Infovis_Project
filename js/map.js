@@ -39,7 +39,15 @@ var partyLegend = ["Socialdemokraterna", "Moderaterna", "Centerpartiet", "Folkpa
 
 var color_domain = [0, 50, 150, 350, 750, 1500, 2000, 2500];             
 var color = d3.scale.ordinal()
-  .range(["rgb(255, 0, 0)", "rgb(0, 0, 255)", "rgb(150, 0, 0)","rgb(0, 0, 150)", "rgb(150, 150, 255)", "rgb(0, 255, 0)", "rgb(255, 150, 150)", "rgb(150, 150, 0)"]);
+  .range([ 
+  partyColor["socialdemokraterna"], 
+  partyColor["moderaterna"],
+  partyColor["centerpartiet"],
+  partyColor["folkpartiet"], 
+  partyColor["kristdemokraterna"], 
+  partyColor["miljöpartiet"], 
+  partyColor["vänsterpartiet"], 
+  partyColor["sverigedemokraterna"] ]);
 
 var legend = svg.selectAll("g.legend")
   .data(color_domain)

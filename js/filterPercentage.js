@@ -57,6 +57,6 @@ function redrawWithPercentFilter() {
 		}
 		
 		//if  threshold was bigger than vote percentage, set color as gray
-		return "gray";
+		return "rgb(0,0,0)";
 	})
 }
