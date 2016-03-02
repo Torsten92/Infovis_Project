@@ -96,9 +96,6 @@ function showDetails(kommun) {
 	var detailsPop = d3.select("#populationText");	
 	var detailsEdu = d3.select("#educationText");	
 	var detailsInc = d3.select("#incomeText");
-
-	//Set title
-	d3.select("#detailTextTitle").html(kommun.properties.name);
 	
 	selectedMunicipality = kommun;
 
@@ -189,33 +186,23 @@ function showDetails(kommun) {
 			x++;
 		}
 	});
-
-
-
-    detailsInfo.html( printParties(kommun) );
-
+	
 	//Draw the donut chart
     createDonut(kommun);
 
-	// Set population text
-	var popStr = "Population: " + popSum;
-
-	// Set education text
-	var eduStr = "Eftergymnasial utbildning: " + tempEdu[0].år;
-
+	var eduPercent = ( tempEdu[0].år / popSum ) * 100;
+	eduPercent = eduPercent.toFixed(2);
 	
-	var incStr = "Inkomst: " + tempInc[0].år;
 	
-	var incStr = "<font size='3'>Inkomst:</font><br>";
-	for(var i = 0; i < tempInc.length; i++) {
-		incStr += tempInc[i].ålder + ": " + tempInc[i].år + "<br>";
-	}
-
-    //var detailsBelowDiv = detailsBelow.append("div").style("border-style", "solid");
-
-    detailsPop.html( popStr);
-	detailsEdu.html( eduStr);
-	detailsInc.html( incStr);
+	//set population, education and income text
+    detailsPop.html( "Population: <br><b>" + popSum + "</b>" );
+	detailsEdu.html( "Utbildning: <br><b>" + tempEdu[0].år + " (" + eduPercent + "%)" + "</b>" );
+	detailsInc.html( "Inkomst: <br><b>" + tempInc[0].år + "</b>" );
+	
+	//Set title text
+	d3.select("#detailTextTitle").html( "<label id='detailsTitle'><font size='5'>"
+								+ kommun.properties.name +
+							"</font></label>");
 }
 
 //Prints a list of the parties for a municipality. Currently used by tooltip and the detailed information box.
