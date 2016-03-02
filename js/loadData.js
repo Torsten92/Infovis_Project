@@ -4,11 +4,15 @@ var mun;
 //Load data
 function loadData(value) {
     dataset = "data/Swedish_Election_" + value + ".csv";
-	
+	year = value;
+
     d3.csv(dataset, function(data) {
 		dataset = data;
         createMajorityList(data);
         dataset = data;
+
+        if(selectedMunicipality)
+			showDetails(selectedMunicipality);
     });
     
 	//Load the topojson data with "svenska kommuner"
