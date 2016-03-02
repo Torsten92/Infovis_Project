@@ -1,4 +1,8 @@
 
+var tooltipDonut = d3.select("body").append("div")    
+        .attr("class", "tooltip")
+        .style("opacity", 1.0);
+
 function createDonut(kommun) {
 	var dataPercent = [], dataParty = [];
 	var x = 0;
@@ -19,14 +23,27 @@ function createDonut(kommun) {
 
     var svg = d3.select("#detailDonutContent");
     var width = document.getElementById("detailDonutContent").offsetWidth;
-    // var height = document.getElementById("info").offsetHeight;	//Base donut window height on info height
     
-    //+10 pixels for margin
-    svg.style("height", height+10 + "px");
+    var height = document.getElementById("detailDonutContent").offsetHeight;
+
     svg = svg.append("svg")
         .attr("class", "donut")
         .append("g")
-        .attr("transform", "translate(" + (width/2) + ", " + 100 + ")");
+        .attr("transform", "translate(" + (width/2) + ", " + 100 + ")")
+
+        //Tooltip
+        .on("mouseover", function() {
+            tooltipDonut.transition() 
+                .duration(200)
+                .style("opacity", 0.9);
+            tooltipDonut.html( printParties(kommun, false, false) )
+                .style("left", (d3.event.pageX + 50) + "px")        
+                .style("top", (d3.event.pageY - 100) + "px");
+            console.log("mouseover");
+        })
+        .on("mouseout", function() {
+            tooltipDonut.transition().style("opacity", 0);        
+        });
 
     var path = svg.selectAll("path")
         .data(pie(dataPercent))

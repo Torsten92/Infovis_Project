@@ -24,8 +24,7 @@ var legend = svg.append("g");
 
 var tooltipDiv = d3.select("body").append("div")	
 		.attr("class", "tooltip")
-		.style("opacity", 0.5)
-		.style("visability", false);
+		.style("opacity", 0.5);
 
 //Sets the map projection
 var projection = d3.geo.mercator()
@@ -82,7 +81,7 @@ function draw(regions)
 				tooltipDiv.transition()	
 					.duration(200)
 					.style("opacity", 0.9);
-				tooltipDiv.html( printParties(d, filterChecked) )
+				tooltipDiv.html( printParties(d, filterChecked, true) )
 				.style("left", (d3.event.pageX + 50) + "px")		
                 .style("top", (d3.event.pageY - 100) + "px")
             })
@@ -193,13 +192,14 @@ function filterLegend() {
 	var colorString = partyColor[ partyToFilter.toLowerCase()];	
 
 	var maxValue = getPercent(partyToFilter.toLowerCase());
+	var region = getRegion(partyToFilter.toLowerCase());
 
 	var col = d3.scale.linear()
 		.domain([0, 0.25*maxValue, 0.5*maxValue, 0.75*maxValue, maxValue])
 		.range(getRange(colorString));
 
 	var values = [0, 0.25*maxValue, 0.5*maxValue, 0.75*maxValue, maxValue];
-	var text = [0 + "%", "", "", "", maxValue + "%"];
+	var text = [0 + "%", "", "", "", maxValue + "% - " + region];
 
 	legend.selectAll("*").remove();
 

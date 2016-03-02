@@ -68,9 +68,7 @@ function filterByParty( checkbox ) {
 		.duration(200)
 		.style("opacity", 1);
 	
-	//set text
-	filtertextDiv.html(partyToFilter + " hade högst valprocent i " +  getRegion(partyToFilter) + " med " + getPercent(partyToFilter) + " %");
-	
+
 	//redraw map
 	if(filterByPercent) {
 		draw(mun);
@@ -93,9 +91,6 @@ function changeFilterParty() {
 	
 	//find max rgb in order to normalize colors
 	findMaxRGB();
-
-	//set text
-	filtertextDiv.html(partyToFilter + " hade högst valprocent i  " + getRegion(partyToFilter) + " med " + getPercent(partyToFilter) + " %");
 
 	//redraw map
 	if(filterByPercent) {

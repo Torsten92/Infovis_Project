@@ -219,9 +219,12 @@ function showDetails(kommun) {
 }
 
 //Prints a list of the parties for a municipality. Currently used by tooltip and the detailed information box.
-function printParties(d, filterChecked) {
+function printParties(d, filterChecked, titleOn) {
 
-	var tooltip = "<font size='5'> " + d.properties.name + "</font>";
+	var tooltip = "";
+
+	if(titleOn)
+		tooltip = "<font size='5'> " + d.properties.name + "</font><br>";
 	
 	var temp = [];
 	var x = 0;			        
@@ -243,11 +246,11 @@ function printParties(d, filterChecked) {
 			var hex = rgbToHex(rgb);
 			
 			if(filterChecked && formatString(partyToFilter, true) == formatString(temp[i].parti, true))
-				tooltip += "<br><font color=" + hex + "> " + temp[i].parti +  " : " + temp[i].procent + "%</font>";
+				tooltip += "<font color=" + hex + "> " + temp[i].parti +  " : " + temp[i].procent + "%</font><br>";
 			else if(filterChecked && formatString(partyToFilter, true) != formatString(temp[i].parti,true))
-				tooltip += "<br>" + temp[i].parti +  " : " + temp[i].procent + "%";
+				tooltip += temp[i].parti +  " : " + temp[i].procent + "%<br>";
 			else
-				tooltip += "<br><font color=" + hex + "> " + temp[i].parti +  " : " + temp[i].procent + "%</font>";
+				tooltip += "<font color=" + hex + "> " + temp[i].parti +  " : " + temp[i].procent + "%</font><br>";
 		}
 	}
 	
