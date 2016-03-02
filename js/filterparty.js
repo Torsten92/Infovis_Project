@@ -68,7 +68,6 @@ function filterByParty( checkbox ) {
 	
 	//redraw map
 	draw(mun);
-	
 }
 
 //called when drop down menu is changed
@@ -90,7 +89,6 @@ function changeFilterParty() {
 
 	//redraw map
 	draw(mun);
-
 }
 
 //fill a list with the filtered parties percentages for each region

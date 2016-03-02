@@ -20,11 +20,12 @@ var filtertextDiv = d3.select("#map").append("div")
 
 var g = svg.append("g");
 
+var legend = svg.append("g");
+
 var tooltipDiv = d3.select("body").append("div")	
 		.attr("class", "tooltip")
 		.style("opacity", 0.5)
 		.style("visability", false);
-
 
 //Sets the map projection
 var projection = d3.geo.mercator()
@@ -33,34 +34,6 @@ var projection = d3.geo.mercator()
 
 //Creates a new geographic path generator and assing the projection        
 var path = d3.geo.path().projection(projection);
-
-//color legend
-var partyLegend = ["Socialdemokraterna", "Moderaterna", "Centerpartiet", "Folkpartiet", "Kristdemokraterna", "Miljöpartiet", "Vänsterpartiet", "Sverigedemokraterna"];
-
-var color_domain = [0, 50, 150, 350, 750, 1500, 2000, 2500];             
-var color = d3.scale.ordinal()
-  .range(["rgb(255, 0, 0)", "rgb(0, 0, 255)", "rgb(150, 0, 0)","rgb(0, 0, 150)", "rgb(150, 150, 255)", "rgb(0, 255, 0)", "rgb(255, 150, 150)", "rgb(150, 150, 0)"]);
-
-var legend = svg.selectAll("g.legend")
-  .data(color_domain)
-  .enter().append("g")
-  .attr("class", "legend");
-
-var lWidth = 15, lHeight = 15;
-
-legend.append("rect")
-	.attr("x", 20)
-	.attr("y", function(d, i){ return height - (i*lHeight) - 2*lWidth;})
-	.attr("width", lWidth)
-	.attr("height", lHeight)
-	.style("fill", color);
-
-legend.append("text")
-	.attr("x", 40)
-	.attr("y", function(d, i){ return height - (i*lHeight) - lWidth - 4;})
-	.attr("font-size", "10px")
-	.text(function(d, i){ return partyLegend[i]; });
-
 
 //Draws the map and the points
 function draw(regions)
@@ -161,6 +134,8 @@ function setTooltipText() {
 
 function drawFiltered(d, i) {
 
+	filterLegend();
+
 	var regionPercent;
 	
 	var geoRegionString = d.properties.name;
@@ -197,6 +172,9 @@ function drawFiltered(d, i) {
 }
 
 function drawMajority(d) {
+
+	majLegend();
+
 	var tempMaj = "";
 	
 	//some string formating is done n order to compaare region name
@@ -212,6 +190,90 @@ function drawMajority(d) {
 	}
 	
 	return partyColor[tempMaj];
+}
+
+function majLegend() {
+
+	var partyLegend = ["Socialdemokraterna", "Moderaterna", "Centerpartiet", "Folkpartiet", "Kristdemokraterna", "Miljöpartiet", "Vänsterpartiet", "Sverigedemokraterna"];
+
+	legend.selectAll("*").remove();
+
+	var legendItem = legend.selectAll(".legend").data(partyLegend)
+	  .enter().append("g").attr("class", "legend");
+
+	var lWidth = 15, lHeight = 15;
+
+	legendItem.append("rect")
+		.attr("x", 20)
+		.attr("y", function(d, i){ return height - (i*lHeight) - 2*lWidth;})
+		.attr("width", lWidth)
+		.attr("height", lHeight)
+		.style("fill", function(d){
+			return partyColor[d.toLowerCase()];
+		});
+
+	legendItem.append("text")
+		.attr("x", 40)
+		.attr("y", function(d, i){ return height - (i*lHeight) - lWidth - 4;})
+		.attr("font-size", "12px")
+		.text(function(d, i){ return partyLegend[i];});
+}
+
+function filterLegend() {
+
+	var colorString = partyColor[ partyToFilter.toLowerCase()];	
+
+	var maxValue = getPercent(partyToFilter.toLowerCase());
+
+	var col = d3.scale.linear()
+		.domain([0, 0.25*maxValue, 0.5*maxValue, 0.75*maxValue, maxValue])
+		.range(getRange(colorString));
+
+	var values = [0, 0.25*maxValue, 0.5*maxValue, 0.75*maxValue, maxValue];
+	var text = [0 + "%", "", "", "", maxValue + "%"];
+
+	legend.selectAll("*").remove();
+
+	var legendItem = legend.selectAll(".legend").data(values)
+	  .enter().append("g").attr("class", "legend");
+
+	var lWidth = 15, lHeight = 15;
+
+	legendItem.append("rect")
+		.attr("x", 20)
+		.attr("y", function(d, i){ return height - (i*lHeight) - 2*lWidth;})
+		.attr("width", lWidth)
+		.attr("height", lHeight)
+		.style("fill", col);
+
+	legendItem.append("text")
+		.attr("x", 40)
+		.attr("y", function(d, i){ return height - (i*lHeight) - lWidth - 4;})
+		.attr("font-size", "12px")
+		.text(function(d, i){ return text[i];});
+}
+
+function getR(str) {
+	var colorsOnly = str.substring(str.indexOf('(') + 1, str.lastIndexOf(')')).split(/,\s*/);
+	return colorsOnly[0];
+}
+
+function getG(str) {
+	var colorsOnly = str.substring(str.indexOf('(') + 1, str.lastIndexOf(')')).split(/,\s*/);
+	return colorsOnly[1];
+}
+
+function getB(str) {
+	var colorsOnly = str.substring(str.indexOf('(') + 1, str.lastIndexOf(')')).split(/,\s*/);
+	return colorsOnly[2];
+}
+
+function getRange(str) {
+	return [ "rgb(" + getR(str)*0.1 + ", " + getG(str)*0.1 + ", " + getB(str)*0.1 + ")", 
+			 "rgb(" + getR(str)*0.3 + ", " + getG(str)*0.3 + ", " + getB(str)*0.3 + ")",
+			 "rgb(" + getR(str)*0.5 + ", " + getG(str)*0.5 + ", " + getB(str)*0.5 + ")",
+			 "rgb(" + getR(str)*0.7 + ", " + getG(str)*0.7 + ", " + getB(str)*0.7 + ")", 
+			 "rgb(" + getR(str) + ", " + getG(str) + ", " + getB(str) + ")"];
 }
 
 //Zoom and panning method
