@@ -196,9 +196,9 @@ function showDetails(kommun) {
 	
 	
 	//set population, education and income text
-    detailsPop.html( "Population: <br><b>" + popSum + "</b>" );
-	detailsEdu.html( "Utbildning: <br><b>" + tempEdu[0].år + " (" + eduPercent + "%)" + "</b>" );
-	detailsInc.html( "Inkomst: <br><b>" + tempInc[0].år + "</b>" );
+    detailsPop.html( "Population: <br><b> Antal invånare: " + popSum + " st.</b>" );
+	detailsEdu.html( "Utbildning: <br><b> Antal högutbildade: " + tempEdu[0].år + " st. (" + eduPercent + "%)" + "</b>" );
+	detailsInc.html( "Inkomst: <br><b> Medelinkomst per år: " + tempInc[0].år + " <br>(i tusentals kronor)</b>" );
 	
 	//Set title text
 	d3.select("#detailTextTitle").html( "<label id='detailsTitle'><font size='5'>"
