@@ -83,7 +83,8 @@ function onResize() {
 	
 	d3.selectAll("#detailDonutContent").html("");
 	
-	createDonut( selectedMunicipality );
+	if(selectedMunicipality != "")
+		createDonut( selectedMunicipality );
 };
 
 //Contains functionality for the detailed information box

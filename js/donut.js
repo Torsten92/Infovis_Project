@@ -39,7 +39,6 @@ function createDonut(kommun) {
             tooltipDonut.html( printParties(kommun, false, false) )
                 .style("left", (d3.event.pageX + 50) + "px")        
                 .style("top", (d3.event.pageY - 100) + "px");
-            console.log("mouseover");
         })
         .on("mouseout", function() {
             tooltipDonut.transition().style("opacity", 0);        
